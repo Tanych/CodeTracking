@@ -14,4 +14,5 @@ class Solution(object):
                         nums[i],nums[j]=nums[j],nums[i]
                         break
                     j+=1
-                i+=1
+            i+=1
+            
