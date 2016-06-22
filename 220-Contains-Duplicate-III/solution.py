@@ -1,4 +1,7 @@
 class Solution(object):
+    def getBucketID(self, i, w):
+        return (i + 1) / w - 1 if i<0 else i/w
+        
     def containsNearbyAlmostDuplicate(self, nums, k, t):
         """
         :type nums: List[int]
@@ -6,12 +9,19 @@ class Solution(object):
         :type t: int
         :rtype: bool
         """
-        set_nums=set()
-        for i in xrange(len(nums)):
-            if i>k:
-                set_nums.remove(nums[i-k-1])
-            if True in map(lambda x:abs(x-nums[i])<=t,set_nums):
+        n=len(nums)
+        if n<2 or k<1 or t<0:
+            return False
+        buckets={}
+        width=t+1
+        for i in xrange(n):
+            id=self.getBucketID(nums[i],width)
+            if id in buckets:
                 return True
-            else:
-                set_nums.add(nums[i])
+            if (id-1 in buckets and abs(nums[i]-buckets[id-1]<width)) or \
+                    (id+1 in buckets and abs(buckets[id+1]-nums[i]<width)):
+                return True
+            buckets[id] = nums[i]
+            if i>=k:
+                del buckets[self.getBucketID(nums[i - k], width)]
         return False
