@@ -17,10 +17,10 @@ class Solution(object):
                     return min_len
                 cur_sum+=nums[right]
                 
-                if (right-left+1)<min_len or not min_len:
-                    min_len=right-left+1
+            if (right-left+1)<min_len or not min_len:
+                min_len=right-left+1
                 # update left, kick the most left ele
-                cur_sum-=nums[left]
-                left+=1
+            cur_sum-=nums[left]
+            left+=1
         return min_len
         
