@@ -16,7 +16,7 @@ class Solution(object):
             if nums[end]==vmid:
                 end-=1
             elif nums[end]<vmid:
-                start=mid
+                start=mid+1
             else:
                 end=mid
                 # if all larger than vmid
