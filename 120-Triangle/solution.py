@@ -1,18 +1,18 @@
 class Solution(object):
-    def dfshelper(self,nums,level,pos):
-        # recur stop
-        if level==len(nums)-1:
-            return [[nums[level][pos]]]
-        else:
-            # path left
-            lp=[[nums[level][pos]]+ch for ch in self.dfshelper(nums,level+1,pos)]
-            # right path
-            rp=[[nums[level][pos]]+ch for ch in self.dfshelper(nums,level+1,pos+1)]
-            return lp+rp
-            
     def minimumTotal(self, triangle):
         """
         :type triangle: List[List[int]]
         :rtype: int
         """
-        return min(sum(li) for li in self.dfshelper(triangle,0,0))
+        # directly update triangle
+        for i in xrange(1,len(triangle)):
+            # [i][0]->[i-1][0]
+            triangle[i][0]+=triangle[i-1][0]
+            # [i][n-1]->[i-1][n-1]
+            triangle[i][-1]+=triangle[i-1][-1]
+            # the row i length is i+1
+            for j in xrange(1,i):
+                triangle[i][j]+=min(triangle[i-1][j],triangle[i-1][j-1])
+        # return min in last row
+        return min(triangle[-1])
+            
