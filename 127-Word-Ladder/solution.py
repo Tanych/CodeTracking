@@ -15,6 +15,7 @@ class Solution(object):
         while len(bwset)!=0 and len(ewset)!=0:
             # record all the possible transform in wordList 
             tw_trans=set()
+            # BFS try possible solution from begin to end
             for strs in bwset:
                 for i in xrange(len(strs)):
                     # replace with the a-z to check possible solution
@@ -25,9 +26,13 @@ class Solution(object):
                             return min_len
                         if com_str in wordList:
                             tw_trans.add(com_str)
-            #  wordlist delete the same transform with the words
+            # wordlist delete the same transform with the words
+            # avoid visit the same word mutiple times
             for li in tw_trans:
                 wordList.remove(li)
+            # speedup--
+            # everytime mark down the possible path from begin to end
+            # reducing time by checking smallest sizes
             if len(tw_trans)<=len(ewset):
                 # move on if the possible solution is less then the ending
                 bwset=tw_trans
