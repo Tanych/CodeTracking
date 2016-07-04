@@ -4,14 +4,12 @@ class Solution(object):
         :type rowIndex: int
         :rtype: List[int]
         """
-        res=[]
         if rowIndex==0:
             return [1]
-        res=[1]
+        res=[0 for _ in xrange(rowIndex+1)]
+        res[0]=1
         for i in xrange(1,rowIndex+1):
-            nextList=[1]
-            for j in xrange(1,len(res)):
-                nextList.append(res[j]+res[j-1])
-            nextList.append(1)
-            res=nextList
+            for j in xrange(i,0,-1):
+                # update the result with previous result
+                res[j]+=res[j-1]
         return res
