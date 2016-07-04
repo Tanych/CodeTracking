@@ -20,7 +20,11 @@ class Solution(object):
                 if p[j - 1] == '.'or s[i-1] == p[j-1]:   ## first case 
                     dp[i][j] = dp[i - 1][j - 1]
                 # if preivous is *, check the previous 
-                elif p[j - 1] == '*':                                           #aa *a case                     #.* case
+                elif p[j - 1] == '*': 
+                    # match 0 ele; match 1 ele
+                    # match mutilple, for example 
+                    # src:abcdeeee dst:abcde*
+                    # check abceee match abcde* ==>check abcee match abcde* ==> and so on
                     dp[i][j] = dp[i][j - 1] or dp[i][j - 2] or (dp[i-1][j] and (s[i-1] == p[j-2] or p[j-2] == '.'))
                     
         return dp[-1][-1]
