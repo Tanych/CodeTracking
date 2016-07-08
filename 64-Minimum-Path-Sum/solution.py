@@ -4,21 +4,31 @@ class Solution(object):
         :type grid: List[List[int]]
         :rtype: int
         """
-        def dfs(grid,step,sum_path,res,row_idx,col_idx):
-            row=len(grid)
-            col=len(grid[0])
-            
-            if row_idx<0 or row_idx==row or col_idx<0 or col_idx==col:
-                return 
-            
-            if step==row+col-2:
-                res.append(sum_path+grid[row_idx][col_idx])
-                
-            dfs(grid,step+1,sum_path+grid[row_idx][col_idx],res,row_idx,col_idx+1)
-            dfs(grid,step+1,sum_path+grid[row_idx][col_idx],res,row_idx+1,col_idx)
-            
-        res=[]
-        dfs(grid,0,0,res,0,0)
-        return min(res)
+        # dp make things simple 
+        # dp[i,j]=min(dp[i-1,j],dp[i,j-1])+grid[i][j]
+        # dfs make all things possible that's why the dfs TLE
+        
+        row=len(grid)
+        col=len(grid[0])
+        if row==0 or col==0:
+            return 0
+
+        dp=[[0 for _ in xrange(col)] for _ in xrange(row)]
+        dp[0][0]=grid[0][0]
+        # deal the first row
+        for i in xrange(1,row):
+            dp[i][0]=dp[i-1][0]+grid[i][0]
+        # deal the first column
+        for j in xrange(1,col):
+            dp[0][j]=dp[0][j-1]+grid[0][j]
+
+        for i in xrange(1,row):
+            for j in xrange(1,col):
+                dp[i][j]=min(dp[i-1][j],dp[i][j-1])+grid[i][j]
+
+        return dp[row-1][col-1]
+
+        
+        
         
         
