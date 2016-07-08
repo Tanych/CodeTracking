@@ -10,28 +10,29 @@ class Solution(object):
         
         # reduce the record space,
         # we only need record the previous column and current column
+        # but using two col, the swap might cost lots of time
+        # reduce to one list
         row=len(grid)
         col=len(grid[0])
         if row==0 or col==0:
             return 0
-        precol=[grid[0][0] for _ in xrange(row)]
-        curcol=[0 for _ in xrange(row)]
+     
+        curcol=[grid[0][0] for _ in xrange(row)]
         
         # deal the first row
         for i in xrange(1,row):
-            precol[i]=precol[i-1]+grid[i][0]
+            curcol[i]=curcol[i-1]+grid[i][0]
 
         for j in xrange(1,col):
-            # current column is == precol+grid[0][j]
-            # precol[0] is updated by replace
-            curcol[0]=precol[0]+grid[0][j]
+            # the precol can replaced by using the value before updated
+            curcol[0]=curcol[0]+grid[0][j]
             for i in xrange(1,row):
-                curcol[i]=min(curcol[i-1],precol[i])+grid[i][j]
+                curcol[i]=min(curcol[i-1],curcol[i])+grid[i][j]
             # update the previous using current value and then move on
             # since the curcol will update in the next loop
-            precol,curcol=curcol,precol
+           
             
-        return precol[row-1]
+        return curcol[row-1]
 
         
         
