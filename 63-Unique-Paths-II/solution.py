@@ -14,16 +14,17 @@ class Solution(object):
         dp=[0 for _ in xrange(col)]
         dp[0]=1
         
-        # deal with the first row
+        # deal with the first row--if only one row
         for j in xrange(1,col):
             if obstacleGrid[0][j]==1:
                 dp[j]=0
             else:
                 dp[j]=dp[j-1]
             
-        # check the dp[i][j]
+        # check the dp[i][j]..the 1---row
         for i in xrange(1,row):
             for j in xrange(0,col):
+                # deal with the first column
                 if j==0:
                     if obstacleGrid[i][j]==1:
                         dp[j]=0
