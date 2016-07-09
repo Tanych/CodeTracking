@@ -4,15 +4,28 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
-        # using the maxstep to record the max step before i can reach
-        # if i reach the maxstep but can't move on then return False
+        # the same idea is from choose the greatest jump beteew the jump and start
         n=len(nums)
+        if n==1:
+            return True
+            
+        #total pos
+        tpos=0
+        # start choice is 0
+        kpos=0
         maxstep=0
+        while nums[tpos]>0:
+            # directly reacheable return True
+            if tpos+nums[tpos]>=n-1:
+                return True
+            for i in xrange(1,nums[tpos]+1):
+                if i+nums[tpos+i]>maxstep:
+                    maxstep=i+nums[tpos+i]
+                    kpos=i
+            # mark the total move step
+            tpos+=kpos
+            # reset to next iteration
+            maxstep=0
+            kpos=0
+        return False
         
-        for i in xrange(n):
-            # if i reach the maxstep, that means it can't move on 
-            if i>maxstep:
-                return False
-            # record the max step that can jump
-            maxstep=max(maxstep,i+nums[i])
-        return True
