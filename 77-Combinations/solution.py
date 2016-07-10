@@ -5,5 +5,10 @@ class Solution(object):
         :type k: int
         :rtype: List[List[int]]
         """
-        from itertools import combinations
-        return list(combinations(range(1, n+1), k))
+        if k == 0:
+            return [[]]
+        res=[]
+        for i in range(1, n+1):
+            for precombine in  self.combine(i-1, k-1):
+                res.append(precombine + [i])
+        return res
