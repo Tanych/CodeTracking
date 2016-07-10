@@ -1,4 +1,14 @@
 class Solution(object):
+    def binarysearch(self,nums,target):
+        l,r=0,len(nums)
+        while l<r:
+            mid=(l+r)/2
+            if nums[mid]>=target:
+                r=mid
+            else:
+                l=mid+1
+        return l
+            
     def searchRange(self, nums, target):
         """
         :type nums: List[int]
@@ -6,31 +16,10 @@ class Solution(object):
         :rtype: List[int]
         """
         n=len(nums)
-        start=-1
-        end=0
-        found=False
-        left=0
-        right=n-1
-        for i in xrange(n):
-            mid=left+(right-left)/2
-            if nums[mid]<target:
-                left=mid+1
-            elif nums[mid]>target:
-                right=mid-1
-            else:
-                found=True
-                start=mid
-                while start>0:
-                    if nums[start-1]==target:
-                        start-=1
-                    else:
-                        break
-                end=mid
-                while end<n-1:
-                    if nums[end+1]==target:
-                        end+=1
-                    else:
-                        break
-                        
-        return [start,end] if found else [-1,-1]
-        
+        start=self.binarysearch(nums,target)
+        if target in nums[start:start+1]:
+            # find the first pos that equal or larger than target
+            end=self.binarysearch(nums,target+1)-1
+            return [start,end]
+        else:
+            return [-1,-1]
