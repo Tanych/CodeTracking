@@ -4,29 +4,14 @@ class Solution(object):
         :type digits: str
         :rtype: List[str]
         """
-        mapping=["","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"]
-        
-        def dfs(digits,step,path,res):
-            if step==len(digits):
-                if path!='':
-                    res.append(path)
-                return
-            if step>len(digits):
-                return
-            for ch in mapping[int(digits[step])]:
-                dfs(digits,step+1,path+ch,res)
-        
-        n=len(digits)
-        if n==0:
+        # more pythonic way to do so
+        if not digits:
             return []
-        res=[]
-        trimdigits=""
+        results = ['']
+        map = {'2':'abc', '3':'def', '4':'ghi', '5':'jkl', '6':'mno', '7':'pqrs', '8':'tuv', '9':'wxyz'}
+        
         for digit in digits:
-            if digit!='0' and digit!='1':
-                trimdigits+=digit
-                
-        for ch in mapping[int(trimdigits[0])]:
-            dfs(trimdigits,1,""+ch,res)
+            results = [result+d for result in results for d in map[digit]]
             
-        return res\
+        return results
         
