@@ -5,10 +5,21 @@ class Solution(object):
         :type k: int
         :rtype: List[List[int]]
         """
-        if k == 0:
-            return [[]]
+        def dfs(start,reslevel,step):
+            if step==k:
+                res.append(reslevel)
+                return
+            # if the left number of elements less then the needed
+            # stop!!!..make the calc faster
+            if n-start+1<k-len(reslevel):
+                return
+            #search
+            for i in xrange(start,n+1):
+                dfs(i+1,reslevel+[i],step+1)
+                
         res=[]
-        for i in range(1, n+1):
-            for precombine in  self.combine(i-1, k-1):
-                res.append(precombine + [i])
+        dfs(1,[],0)
         return res
+        
+        
+        
