@@ -7,15 +7,19 @@ class Solution(object):
         """
         def recurhelper(nums,res,path,target,start):
             if target==0:
-                if path not in res:
-                    res.append(path)
+                res.append(path)
                 return
             if target<0:
                 return
-            if target>0:
-                for i in xrange(start,len(nums)):
-                    if nums[i]<=target:
-                        recurhelper(nums[:i]+nums[i+1:],res,path+[nums[i]],target-nums[i],i)
+            for i in xrange(start,len(nums)):
+                # ignore the duplicate start from i
+                if i > start and nums[i] == nums[i - 1]:
+                    continue
+                # reduce count
+                if nums[i]>target:
+                    break
+                if nums[i]<=target:
+                    recurhelper(nums[:i]+nums[i+1:],res,path+[nums[i]],target-nums[i],i)
 
 
         res=[]
