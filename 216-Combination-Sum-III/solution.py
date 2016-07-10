@@ -1,26 +1,29 @@
 class Solution(object):
-    def helper(self,k,n,start):
-        res=[]
-        for i in xrange(start,10):
-            # assume the k value are equal, the max is n/k
-            if i>n/k:
-                return res
-            # k==1, only the i equal the n is possible
-            if k==1:
-                if i==n:
-                    return [[i]]
-                else:
-                    continue
-            # depth search every value in the sub depth
-            for sub in self.helper(k-1,n-i,i+1):
-                res.append([i]+sub)
-        return res
-        
     def combinationSum3(self, k, n):
         """
         :type k: int
         :type n: int
         :rtype: List[List[int]]
         """
-        return self.helper(k,n,1)
+        digits=[1,2,3,4,5,6,7,8,9]
+        
+        def dfs(nums,target,path,res,level,step):
+            """
+            level: to record the recursive level and all possible
+            step: record the elements of the results
+            path: one result of the recursive
+            """
+            if step==k and target==0:
+                res.append(path)
+                return
+            
+            if step>k or target<0:
+                return
+            
+            for i in xrange(level,len(nums)):
+                if nums[i]<=target:
+                    dfs(nums[:i]+nums[i+1:],target-nums[i],path+[nums[i]],res,i,step+1)
+        res=[]
+        dfs(digits,n,[],res,0,0)
+        return res
         
