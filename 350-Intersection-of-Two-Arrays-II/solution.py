@@ -5,23 +5,15 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: List[int]
         """
-        # using sort
         n1=len(nums1)
         n2=len(nums2)
+        maping={}
         res=[]
-        if n1==0 or n2==0:
-            return res
+        for i in xrange(n1):
+            maping[nums1[i]]=maping.get(nums1[i],0)+1
         
-        nums1.sort()
-        nums2.sort()
-        i=j=0
-        while i<n1 and j<n2:
-            if nums1[i]>nums2[j]:
-                j+=1
-            elif nums1[i]<nums2[j]:
-                i+=1
-            else:
-                res.append(nums1[i])
-                i+=1
-                j+=1
+        for i in xrange(n2):
+            maping[nums2[i]]=maping.get(nums2[i],0)-1
+            if maping[nums2[i]]>=0:
+                res.append(nums2[i])
         return res
