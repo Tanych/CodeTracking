@@ -5,23 +5,23 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: List[int]
         """
+        # using sort
         n1=len(nums1)
         n2=len(nums2)
-        map1={}
-        map2={}
-        
         res=[]
-        # building map for the nums2
-        for i in xrange(n1):
-            map1[nums1[i]]=map1.get(nums1[i],0)+1
-               
-        for i in xrange(n2):
-            map2[nums2[i]]=map2.get(nums2[i],0)+1
+        if n1==0 or n2==0:
+            return res
         
-        keys_intersect=set(map1.keys()) & set(map2.keys())
-        
-        for key in keys_intersect:
-            cnt=min(map1[key],map2[key])
-            res+=[key for _ in xrange(cnt)]
-            
+        nums1.sort()
+        nums2.sort()
+        i=j=0
+        while i<n1 and j<n2:
+            if nums1[i]>nums2[j]:
+                j+=1
+            elif nums1[i]<nums2[j]:
+                i+=1
+            else:
+                res.append(nums1[i])
+                i+=1
+                j+=1
         return res
