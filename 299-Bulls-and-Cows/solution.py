@@ -8,25 +8,25 @@ class Solution(object):
         n=len(secret)
         bulls=0
         cows=0
-        secret_left=[]
-        guess_left=[]
+        hashmap=[0]*10
         # count the bulls
         for i in xrange(len(secret)):
             if  secret[i]==guess[i]:
                 bulls+=1
             else:
-                secret_left.append(secret[i])
-                guess_left.append(guess[i])
-        
-        # count the intesection of two list
-        hashmap={}
-        for num in secret_left:
-            hashmap[num]=hashmap.get(num,0)+1
-        
-        for num in guess_left:
-            hashmap[num]=hashmap.get(num,0)-1
-            if hashmap[num]>=0:
-                cows+=1
+                # if secret match the <
+                # it means that the guess has access the map
+                if hashmap[int(secret[i])]<0:
+                    cows+=1
+                # secret to plus the record
+                hashmap[int(secret[i])]+=1
+                
+                # check whether the map is larger than 0
+                # if so, the secret must access before
+                if hashmap[int(guess[i])]>0:
+                    cows+=1
+                # guess to plus the record
+                hashmap[int(guess[i])]-=1
                 
         return str(bulls)+'A'+str(cows)+'B'
         
