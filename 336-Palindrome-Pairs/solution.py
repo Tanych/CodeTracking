@@ -23,7 +23,7 @@ class Solution(object):
             
         # deal with empty case ""
         # if words[i] is palindrome, combine with empty is also true
-        if "" in hashmap.keys():
+        if "" in hashmap:
             for i in xrange(len(words)):
                 if words[i]=="":
                     continue
@@ -36,10 +36,10 @@ class Solution(object):
               left=words[i][:j]
               right=words[i][j:]
               # if left has the reverse and check the right part
-              if left in hashmap.keys() and self.ispalindrome(right) and hashmap[left]!=i:
+              if left in hashmap and self.ispalindrome(right) and hashmap[left]!=i:
                   res.append([i,hashmap[left]])
               # vice versa
-              if right in hashmap.keys() and self.ispalindrome(left) and hashmap[right]!=i:
+              if right in hashmap and self.ispalindrome(left) and hashmap[right]!=i:
                   res.append([hashmap[right],i])
             
         return res
