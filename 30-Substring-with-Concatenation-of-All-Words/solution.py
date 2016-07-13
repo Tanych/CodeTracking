@@ -5,35 +5,28 @@ class Solution(object):
         :type words: List[str]
         :rtype: List[int]
         """
-        from copy import deepcopy
-        if not words:
-            return []
+        # the length relate to the solution
+        str_len=len(s)
         word_len=len(words[0])
-        total_len=len(words)*word_len
-        # building map for words
+        total_len=word_len*len(words)
+        wordset=set(words)
+        # using the prehash to match each new one
+        prehash=sorted([hash(w) for w in words])
+        # building the hash for every possible word
+        wordhash=[]
         res=[]
-        i=0
-        hashmap={}
-        for word in words:
-            hashmap[word]=hashmap.get(word,0)+1
+        # building every word possible in hash
+        for i in xrange(str_len-word_len+1):
+            if s[i:i+word_len] in wordset:
+                wordhash.append(hash(s[i:i+word_len]))
+            else:
+                wordhash.append(None)
                 
-        while i+total_len<=len(s):
-            j=i
-            copy=deepcopy(hashmap)
-            while j< i+total_len:
-                # if not in the hash, break
-                if s[j:word_len+j] not in copy:
-                    break
-                else:
-                    # if find than check whether occurs before
-                    if copy[s[j:word_len+j]]==1:
-                        del copy[s[j:word_len+j]]
-                    else:
-                        # no, update the occurs
-                        copy[s[j:word_len+j]]-=1
-                j+=word_len
-            # if all in hashmap and only occurs once, add to res
-            if len(copy)==0:
-                res.append(i)
-            i+=1
+        # seach whether it's possible to find the same elements
+        for i in xrange(str_len-word_len+1):
+            # search the number of totoal_len and the corresponding hash
+            if wordhash[i] and sorted(wordhash[i:i+total_len:word_len])==prehash:
+              res.append(i)
+              
         return res
+                
