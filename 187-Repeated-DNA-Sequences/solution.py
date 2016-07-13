@@ -11,8 +11,6 @@ class Solution(object):
         res=[]
         for i in xrange(len(s)-9):
             hashmap[s[i:i+10]]=hashmap.get(s[i:i+10],0)+1
-        
-        for k,v in hashmap.iteritems():
-            if v>=2:
-                res.append(k)
+            if hashmap[s[i:i+10]]==2:
+                res.append(s[i:i+10])
         return res
