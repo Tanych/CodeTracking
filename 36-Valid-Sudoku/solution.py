@@ -4,45 +4,32 @@ class Solution(object):
         :type board: List[List[str]]
         :rtype: bool
         """
-        
-        # 1. check the row, no duplicate nums
         row=len(board)
         col=len(board[0])
         
-        for i in xrange(row):
-            trow=[]
-            for j in xrange(col):
-                if board[i][j] in trow:
-                    return False
-                if board[i][j]!='.':
-                    if board[i][j].isdigit():
-                        trow.append(board[i][j])
-                    else:
-                        return False
-        # 2. check the column, no duplicate nums             
-        for j in xrange(col):
-            tcol=[]
-            for i in xrange(row):
-                if board[i][j] in tcol:
-                    return False
-                if board[i][j]!='.':
-                    if board[i][j].isdigit():
-                        tcol.append(board[i][j])
-                    else:
-                        return False
+        if row!=9 or col!=9:
+            return False
         
-        # 3. check the mini 9 square
-        for m in xrange(3):
-            for n in xrange(3):
-                tsquare=[]
-                for i in xrange(3*m,3*(m+1)):
-                    for j in xrange(3*n,3*(n+1)):
-                        if board[i][j] in tsquare:
-                            return False
-                        if board[i][j]!='.':
-                            if board[i][j].isdigit():
-                                tsquare.append(board[i][j])
-                            else:
-                                return False
+        # using the moving num to record the occur of nums
+        # 3 rules for check sudoku
+        trows,tcols,blocks=[0]*9,[0]*9,[0]*9
+        idx=0
+        for i in xrange(row):
+            for j in xrange(col):
+                if board[i][j]!='.':
+                    if not board[i][j].isdigit():
+                        return False
+                        
+                    idx=1<<int(board[i][j])
+                    # check whether has the same value in the same row col block
+                    if trows[i]&idx or tcols[j]&idx or blocks[(i/3)*3+j/3]&idx:
+                        return False
+                        
+                    trows[i]|=idx
+                    tcols[j]|=idx
+                    # i=8 j=8, block[9]
+                    # i=4 j=8, block[2]
+                    blocks[(i/3)*3+j/3]|=idx
+                
         return True
         
