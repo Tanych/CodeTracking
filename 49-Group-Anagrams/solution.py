@@ -1,11 +1,12 @@
 class Solution(object):
-    def key(self, s):
-        INT_MAX=2<<31-1
-        result=1
+    def strsort(self, s):
+        cnt=[0]*26
+        res=''
         for ch in s:
-            n=ord(ch)-ord('a')+1
-            result*=(n*n+n+41)%INT_MAX
-        return result
+            cnt[ord(ch)-ord('a')]+=1
+        for i in xrange(26):
+            res+=str(ord('a')+i)*cnt[i]
+        return res
         
     def groupAnagrams(self, strs):
         """
@@ -16,7 +17,7 @@ class Solution(object):
         hashmap={}
         for i in xrange(n):
             # sorted the key 
-            key=self.key(strs[i])
+            key=self.strsort(strs[i])
             # if the key is the same plus
             hashmap[key]=hashmap.get(key,[])+[strs[i]]
         return [v for v in hashmap.values()]
