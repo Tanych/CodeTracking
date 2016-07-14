@@ -6,6 +6,19 @@
 #         self.random = None
 
 class Solution(object):
+    def dfs(self,hashmap,node):
+        newnode=RandomListNode(node.label)
+        hashmap[node]=newnode
+        
+        if node.random:
+            if node.random not in hashmap:
+                self.dfs(hashmap,node.random)
+            hashmap[node].random=hashmap[node.random]
+        if node.next:
+            if node.next not in hashmap:
+                self.dfs(hashmap,node.next)
+            hashmap[node].next=hashmap[node.next]
+        
     def copyRandomList(self, head):
         """
         :type head: RandomListNode
@@ -14,24 +27,8 @@ class Solution(object):
         if not head:
             return None
             
-        # using hash map to store the value of the object
+        # map to search
         hashmap={}
-        hashmap[head]=RandomListNode(head.label)
-        p=head
-        while p:
-            if p.random:
-                # if the first time to create, build the node
-                if p.random not in hashmap:
-                    hashmap[p.random]=RandomListNode(p.random.label)
-                # if already create, directy pointer
-                hashmap[p].random=hashmap[p.random]
-            if p.next:
-                # if the first time to create, build the node
-                if p.next not in hashmap:
-                    hashmap[p.next]=RandomListNode(p.next.label)
-                # if already create, directy pointer
-                hashmap[p].next=hashmap[p.next]
-            # move on
-            p=p.next
+        self.dfs(hashmap,head)
         return hashmap[head]
         
