@@ -27,9 +27,8 @@ class Solution(object):
         minlen=1<<31-1
         res=''
         for i in xrange(len(s)):
-            for j in xrange(i+len(t)-1,len(s)):
-                ss=''.join(sorted(s[i:j+1]))
-                if self.contains(ss,st):
+            for j in xrange(i+len(t)-1,min(len(s),minlen+i+len(t)-1)):
+                if self.contains(s[i:j+1],st):
                     if j-i<=minlen:
                         minlen=j-i
                         res=s[i:j+1]
