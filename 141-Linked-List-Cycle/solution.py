@@ -13,14 +13,16 @@ class Solution(object):
         if not head or not head.next:
             return False
         
-        p=head
-        hashmap={}
-        
-        while p:
-            if p in hashmap:
-                return True
-            else:
-                hashmap[p]=hashmap.get(p,0)+1
-            p=p.next
-            
-        return False
+        # Tortoise and hare
+        # using two diffirent pointer with two different speed
+        # if has the cycle if could equal
+        slow=head
+        fast=head.next.next
+        try:
+            while slow is not fast:
+                slow=slow.next
+                fast=fast.next.next
+            # if match
+            return True
+        except:
+            return False
