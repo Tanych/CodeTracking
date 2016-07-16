@@ -30,45 +30,43 @@ class Solution(object):
         
         if m==n:
             return head
-        t=m
+            
+        #record the lengt of two parts
+        lenp1,lenp2=m,n
+        
+        # divide the first part
         mcur=head
         mpre=None
-        while t>1:
+        while lenp1>1:
             mpre=mcur
             mcur=mcur.next
-            t-=1
+            lenp1-=1
         # get the firs part
-        tlast1=mpre
+        plast1=mpre
+        # deal with the head case
         if mpre:
             mpre.next=None
-        #print mcur.val
         
+        # divide the second part
         npre=None
         ncur=mcur
-        b=n
-        while b>=m:
+        while lenp2>=m:
             npre=ncur
             ncur=ncur.next
-            print n,m,npre.val
-            b-=1
-            
-        # get the second part
-        tlast2=npre
-        #print npre.val
-        #if not ncur:
+            lenp2-=1
         npre.next=None
-        #print mcur.val
         
+        # reverse m--n part
+        # mcur is the start point of m
         rhead=self.reverselist(mcur)
-        #print rhead.val
             
-        # combine
-        if tlast1:
-            tlast1.next=rhead
-        
+        # concat the part1 and reverse part
+        if plast1:
+            plast1.next=rhead
+        # concat the end of reverse part and third part
         mcur.next=ncur
         
-        return head if tlast1 else rhead
+        return head if plast1 else rhead
         
             
         
