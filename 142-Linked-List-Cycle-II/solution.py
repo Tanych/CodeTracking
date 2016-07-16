@@ -23,7 +23,7 @@ class Solution(object):
         # meet point to the cycle start point
         
         slow=head
-        fast=head.next.next
+        fast=head
         hascycle=False
         while fast and fast.next and fast.next.next:
             slow=slow.next
