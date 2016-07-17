@@ -4,6 +4,8 @@ class Solution(object):
         :type x: int
         :rtype: int
         """
+        """
+        # if not using the bin search
         if x==1:
             return 1
         
@@ -20,3 +22,9 @@ class Solution(object):
                 end=mid-1
                 
         return begin-1 if x<begin*begin else begin
+        """
+        r=x
+        while r*r>x:
+            r=(r+x/r)/2
+        return r
+        
