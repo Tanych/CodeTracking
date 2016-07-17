@@ -27,15 +27,8 @@ class Solution(object):
             return z==x
         x_cal=x if y>x else y
         y_cal=y if y>x else x
-        
-        r=y_cal%x_cal
-        # 3,6
-        # if x,y is mutilp,z should also be mutilp
-        if r==0:
-            return z%x_cal==0
-        else:
-            print z,r,self.gcd(r,x_cal)
-            return z%self.gcd(r,x_cal)==0
+
+        return z%self.gcd(x_cal,y_cal)==0
         
         
         
