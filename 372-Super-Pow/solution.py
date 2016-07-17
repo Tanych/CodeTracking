@@ -3,7 +3,7 @@ class Solution(object):
         """
         k>=0 and k<=10
         """
-        a%=1337
+        #a%=1337
         res=1
         for i in xrange(k):
             res=(res*a)%1337
