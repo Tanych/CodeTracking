@@ -13,7 +13,7 @@ class Solution(object):
         :rtype: bool
         """
         # this math problem need more time to understand prove
-        # https://discuss.leetcode.com/topic/49257/share-my-0ms-c-solution-with-proof-and-explanation/2
+        # https://discuss.leetcode.com/topic/49238/math-solution-java-solution
         # deal corner case
         if z==0 or z==x+y:
             return True
@@ -25,10 +25,8 @@ class Solution(object):
             return x==z
         if x==y:
             return z==x
-        x_cal=x if y>x else y
-        y_cal=y if y>x else x
 
-        return z%self.gcd(x_cal,y_cal)==0
+        return z%self.gcd(x,y)==0
         
         
         
