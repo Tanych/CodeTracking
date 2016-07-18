@@ -17,26 +17,21 @@ class Solution(object):
             else:
                 break
         # get rid of str
-        nwstrs=strs[start:n]
-        if len(nwstrs)==0 or (nwstrs[0]!='-' and nwstrs[0]!='+' and not nwstrs[0].isdigit()):
+        if len(strs)==start or (strs[start]!='-' and strs[start]!='+' and not strs[start].isdigit()):
             return 0
         
-        if nwstrs[0]=='-':
+        if strs[start]=='-':
             neg=-1
-            nwstrs=nwstrs[1:]
-        elif nwstrs[0]=='+':
+            start+=1
+        elif strs[start]=='+':
             neg=1
-            nwstrs=nwstrs[1:]
-            
-        for i in xrange(len(nwstrs)):
-            if nwstrs[i].isdigit():
-                int_res.append(ord(nwstrs[i])-ord('1')+1)
-            else:
-                break
-        #print int_res
+            start+=1
+
         sum_int=0
-        for j in xrange(len(int_res)):
-            sum_int+=int(int_res[j]*math.pow(10,len(int_res)-j-1))
+        while start<len(strs) and strs[start].isdigit():
+            digit=ord(strs[start])-ord('1')+1
+            sum_int=sum_int*10+digit
+            start+=1
             
         if neg==-1 and sum_int>(1<<31):
             return -(1<<31)
