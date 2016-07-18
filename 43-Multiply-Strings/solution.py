@@ -24,12 +24,12 @@ class Solution(object):
             # the carry record the number multiply
             multcarry=0
             for j in xrange(n1):
-                tmval=(ord(num1_in[j])-ord('0'))*(ord(num2_in[i])-ord('0'))+multcarry
+                tmval=(ord(num1_in[j])-48)*(ord(num2_in[i])-48)+multcarry
                 mval=tmval%10
                 multcarry=tmval/10
-                sum_pos=(ord(res[i+j])-ord('0'))+mval+addcarry
+                sum_pos=(ord(res[i+j])-48)+mval+addcarry
                 addcarry=sum_pos/10
-                res[i+j]=chr(sum_pos%10+ord('0'))
+                res[i+j]=chr(sum_pos%10+48)
                 
             # deal with the last carry
             # the first carry comes from the addcarry means add all the value in the same i+j
