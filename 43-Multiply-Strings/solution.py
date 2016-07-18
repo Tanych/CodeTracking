@@ -5,6 +5,8 @@ class Solution(object):
         :type num2: str
         :rtype: str
         """
+        # not using int or str to convert
+        
         if num1=='0' or num2=='0':
             return '0'
 
@@ -22,14 +24,17 @@ class Solution(object):
             # the carry record the number multiply
             multcarry=0
             for j in xrange(n1):
-                tmval=int(num1_in[j])*int(num2_in[i])+multcarry
+                tmval=(ord(num1_in[j])-ord('0'))*(ord(num2_in[i])-ord('0'))+multcarry
                 mval=tmval%10
                 multcarry=tmval/10
-                sum_pos=int(res[i+j])+mval+addcarry
+                sum_pos=(ord(res[i+j])-ord('0'))+mval+addcarry
                 addcarry=sum_pos/10
-                res[i+j]=str(sum_pos%10)
-            # deal with the last
-            res[i+n1]=str(int(res[i+n1])+addcarry+multcarry)
+                res[i+j]=chr(sum_pos%10+ord('0'))
+                
+            # deal with the last carry
+            # the first carry comes from the addcarry means add all the value in the same i+j
+            # the second carry come from the mutilp op 323*24-->3*4--12-->multcarry 1
+            res[i+n1]=chr(ord(res[i+n1])+addcarry+multcarry)
 
         rvsres=res[::-1]
         # get rid of the first start 0
