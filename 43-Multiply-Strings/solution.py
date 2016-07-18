@@ -23,11 +23,16 @@ class Solution(object):
             addcarry=0
             # the carry record the number multiply
             multcarry=0
+            # the following loop is doing mutip for every element in num1
             for j in xrange(n1):
+                # record the tmp value
                 tmval=(ord(num1_in[j])-48)*(ord(num2_in[i])-48)+multcarry
-                mval=tmval%10
+                # get the digit
+                digit=tmval%10
+                # get the carry in multiple 
                 multcarry=tmval/10
-                sum_pos=(ord(res[i+j])-48)+mval+addcarry
+                # sum the value in same position
+                sum_pos=(ord(res[i+j])-48)+digit+addcarry
                 addcarry=sum_pos/10
                 res[i+j]=chr(sum_pos%10+48)
                 
