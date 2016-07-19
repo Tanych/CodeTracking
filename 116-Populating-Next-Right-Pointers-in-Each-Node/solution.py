@@ -24,15 +24,15 @@ class Solution(object):
                 pre=pre.next
             root=root.next
             # if root reaches the right most
-            # go to the left level
+            # go to the next level
             if not root:
                 # reset pre to the new head
                 pre=newhead
-                # get the next level head 
+                # get the next level left most head 
                 root=newhead.next
                 # make the last level link broken
                 # if works well only for the last level
                 # since if root.left or root.right is not none
                 # the pre.next will change the value
-                newhead.next=None
+        newhead.next=None
         
