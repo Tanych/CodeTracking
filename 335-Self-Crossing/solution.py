@@ -35,5 +35,5 @@ class Solution(object):
             # the (6-7) should larger than (4-3) minus (2-1)
             if i>=5 and x[i-1]<=x[i-3] and x[i-1]>=x[i-3]-x[i-5] and x[i-2]>=x[i-4] and x[i]>=x[i-2]-x[i-4]:
                 return True
-        
+            i+=1
         return False
