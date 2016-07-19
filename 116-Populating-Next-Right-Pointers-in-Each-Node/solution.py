@@ -34,5 +34,5 @@ class Solution(object):
                 # if works well only for the last level
                 # since if root.left or root.right is not none
                 # the pre.next will change the value
-        newhead.next=None
+                #newhead.next=None
         
