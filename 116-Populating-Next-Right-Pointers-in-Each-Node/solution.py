@@ -29,7 +29,7 @@ class Solution(object):
                 # reset pre to the new head
                 pre=newhead
                 # get the next level left most head 
-                root=newhead.next
+                root=pre.next
                 # make the last level link broken
                 # if works well only for the last level
                 # since if root.left or root.right is not none
