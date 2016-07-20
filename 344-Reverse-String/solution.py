@@ -13,5 +13,7 @@ class Solution(object):
         
         while left<right:
             lis[left],lis[right]=lis[right],lis[left]
+            left+=1
+            right-=1
         
         return ''.join(lis)
