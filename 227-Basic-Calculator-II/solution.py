@@ -17,25 +17,26 @@ class Solution(object):
             return 0
         # using stack to store the result
         numstk=[]
-        resnum=0
         num=0
         # 1(+),-1(-),2(*),3(/)
         # should start with positive num
-        op=1
-        # inital the product with 1
-        product=1
+        op='+'
         
         for i in xrange(len(s)):
             if s[i].isdigit():
                 num=num*10+int(s[i])
-            if s[i]=='+' or s[i]=='-':
-                numstk.append(product*num if op==2 else self.divideNeg(product,num) if op==3 else op*num)
-                op=1 if s[i]=='+' else -1
+            if (not s[i].isdigit() and s[i]!=' ') or i==len(s)-1:
+                # the op is the previous op
+                # 14*3/2 whien s[i]=='*' ,op is the first '+'
+                if op=='+' or op=='-':
+                    numstk.append(num if op=='+' else -num)
+                elif op=='*' or op=='/':
+                    # get the previous op
+                    opval=numstk.pop()
+                    # push the result
+                    numstk.append(opval*num if op=='*' else self.divideNeg(opval,num))
+                # update op
+                op=s[i]
                 num=0
-            elif s[i]=='*' or s[i]=='/':
-                product=product*num if op==2 else self.divideNeg(product,num) if op==3 else op*num
-                op=2 if s[i]=='*' else 3
-                num=0
-        numstk.append(product*num if op==2 else self.divideNeg(product,num) if op==3 else op*num)
-        return sum(numstk)
+        return sum(numstk) if numstk else 0
         
