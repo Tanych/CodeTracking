@@ -28,6 +28,8 @@ class Solution(object):
                 op=-1
             elif s[i]=='(':
                 stack_ex.append('+' if op==1 else '-')
+                # need to reset to "+" since "-(1" the first
+                # number of '(' should be positive
                 op=1
             elif s[i]==')':
                 # begin to calc,+,- is the sign to stop add
