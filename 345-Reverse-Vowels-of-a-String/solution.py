@@ -10,7 +10,7 @@ class Solution(object):
         mapping=['a','e','i','o','u','A','E','I','O','U']
         
         left,right=0,len(s)-1
-        
+        lis=list(s)
         while left<right:
             while left<len(s) and s[left] not in mapping:
                 left+=1
@@ -18,8 +18,8 @@ class Solution(object):
                 right-=1
                 
             if left<right:
-                s=s[:left]+s[right]+s[left+1:right]+s[left]+s[right+1:]
+                lis[left],lis[right]=lis[right],lis[left]
                 left+=1
                 right-=1
-        return s
+        return ''.join(lis)
         
