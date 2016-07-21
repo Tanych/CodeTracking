@@ -1,5 +1,9 @@
 class Solution(object):
-    def helper(self,s,mapping):
+    def helper(self,s,mapping,hashvalue):
+        
+        if s in hashvalue:
+            return hashvalue[s]
+            
         if s[0] not in mapping:
             return 0
             
@@ -14,10 +18,11 @@ class Solution(object):
                 
         left=right=0
         if s and s[0] in mapping:
-            left=self.helper(s[1:],mapping)
+            left=self.helper(s[1:],mapping,hashvalue)
         if s and s[0:2] in mapping:
-            right=self.helper(s[2:],mapping)
-        return left+right
+            right=self.helper(s[2:],mapping,hashvalue)
+        hashvalue[s]=left+right
+        return hashvalue[s]
         
     def numDecodings(self, s):
         """
@@ -32,6 +37,6 @@ class Solution(object):
         for i in xrange(26):
             mapping[str(i+1)]=chr(65+i)
         
-        
-        return self.helper(s,mapping)
+        hashvalue={}
+        return self.helper(s,mapping,hashvalue)
         
