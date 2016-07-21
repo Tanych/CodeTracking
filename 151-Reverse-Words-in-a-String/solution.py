@@ -6,9 +6,9 @@ class Solution(object):
         """
         if not s:
             return ""
-        
+        #using split to get the words
         words=s.split()
-        print words
+        # two pointer to get the reverse
         i,j=0,len(words)-1
         while i<j:
             words[i],words[j]=words[j],words[i]
