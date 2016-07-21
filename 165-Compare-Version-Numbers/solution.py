@@ -5,30 +5,29 @@ class Solution(object):
         :type version2: str
         :rtype: int
         """
-        num1=version1.split('.')
-        num2=version2.split('.')
-        
+        # there are lots of coner case to deal with
+        # 01.1 9.0.0 vs 9 9.000.0vs 9 
         i,j=0,0
-        while i<len(num1) and j<len(num2):
-            if int(num1[i])>int(num2[j]):
+        n1,n2=len(version1),len(version2)
+        while i<len(version1) or j<len(version2):
+            intv1,intv2=0,0
+            # the num in version1
+            while i<n1 and version1[i]!='.':
+                intv1=intv1*10+int(version1[i])
+                i+=1
+            # the number in version2
+            while j<n2 and version2[j]!='.':
+                intv2=intv2*10+int(version2[j])
+                j+=1
+                
+            # compare
+            if intv1>intv2:
                 return 1
-            elif int(num1[i])<int(num2[j]):
+            elif intv1<intv2:
                 return -1
+            # if eqaul move on next level
             i+=1
             j+=1
-    
-        if i==len(num1) and  j==len(num2):
-            return 0
-        elif i==len(num1) and j<len(num2):
-            while j<len(num2) and int(num2[j])==0:
-                j+=1
-            if j==len(num2):
-                return 0
-            return -1
-        elif i<len(num1) and j==len(num2):
-            while i<len(num1) and int(num1[i])==0:
-                i+=1
-            if i==len(num1):
-                return 0
-            return 1
      
+        return 0
+    
