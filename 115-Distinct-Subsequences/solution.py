@@ -1,25 +1,39 @@
 class Solution(object):
-     def helper(self,s, t, hashmap={}):
-        res=0
-        if not t:           
-            return 1
-        if not s and t:     
-            return 0
-        # if already searched return the result
-        if (s, t) in hashmap:  
-            return hashmap[s, t]
-        # try to find the possible count in the laster string
-        for i in range(len(s)):
-            if t[0] == s[i]: 
-                res += self.helper(s[i+1:], t[1:], hashmap)
-        
-        hashmap[s,t] = res
-        return hashmap[s,t]
-        
      def numDistinct(self, s, t):
         """
         :type s: str
         :type t: str
         :rtype: int
         """
-        return self.helper(s,t)
+        # To be clear, the question is to find the 
+        # t string in s string which the position
+        # shoule keep in original
+        
+        # It's a typical dp problem,the definition is as follows:
+        # define: dp[i][j]: how many t[0,i] occurs in s[0,j]
+        # initial: dp[0][j]=1 and dp[i][j]=0 since t(0,0)=""
+        # it could 1 in every source string
+        # gerneal: there are two situations:
+        # 1. AE VS AECEE, if 'E' in AE comes from the last `E` in AECEEE
+        # the problem transformed to how many A in AECE
+        # dp[i][j]=dp[i-1]+dp[j-1]
+        # 2. AE vs AECEE, if the E doesn't comes from the last 'E'
+        # we need to find how many AE in AECE
+        # dp[i][j]=dp[i][j-1]
+        tlen=len(t)
+        slen=len(s)
+        dp=[[0 for _ in xrange(slen+1)] for _ in xrange(tlen+1)]
+        dp[0][0]=1
+        
+        # initial the t 0 '' in s
+        for i in xrange(tlen+1):
+            for j in xrange(1,slen+1):
+                if i==0: dp[i][j]=1
+                else:
+                    # i,j means the number of the string
+                    # i-1 index means num i string
+                    dp[i][j]=dp[i][j-1]+(dp[i-1][j-1] if t[i-1]==s[j-1] else 0)
+                    
+        return dp[tlen][slen]
+        
+        
