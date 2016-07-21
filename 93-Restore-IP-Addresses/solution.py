@@ -11,24 +11,23 @@ class Solution(object):
             return False
         if intnum>=100 and intnum<=255 and lens>3:
             return False
-        return True
+            
+        return 0<=intnum<=255
+    
         
     def helper(self,s,step,ipstr,res):
         # step means the level to recur
         # only 4 level
         if step==3:
             # if reaches the final level
-            if self.checknum(s) and 0<=int(s)<=255:
+            if self.checknum(s):
                 ipstr+='.'+s
                 res.append(ipstr)
                 return 
         # else continue to recusive find the result
         for i in xrange(len(s)):
             # try all possible value in 0-255
-            intnum=int(s[:i+1])
-            if not self.checknum(s[:i+1]):
-                continue
-            if 0<=intnum<=255:
+            if self.checknum(s[:i+1]):
                 self.helper(s[i+1:],step+1,ipstr+('.' if ipstr else '')+s[:i+1],res)
         
     def restoreIpAddresses(self, s):
