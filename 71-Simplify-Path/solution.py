@@ -9,16 +9,14 @@ class Solution(object):
         
         dirlist=path.split('/')
         
-        resstr=['/']
+        resls=['/']
         for i in xrange(len(dirlist)):
             if dirlist[i]=='.' or dirlist[i]=='':
                 continue
-            if dirlist[i]=='..':
-                if len(resstr)==1 and resstr[0]=='/':
-                    continue
-                else:
-                   resstr.pop() 
-            else:
-                resstr.append('/'+dirlist[i])
-        
-        return ''.join(resstr if len(resstr)==1 else resstr[1:])
+            # if '/' is not the only then pop
+            if dirlist[i]=='..' and len(resls)>1:
+                   resls.pop() 
+            elif dirlist[i]!='..':
+                resls.append('/'+dirlist[i])
+        # if only has '/' directly reutrn ,otherwise get rid of the first
+        return ''.join(resls if len(resls)==1 else resls[1:])
