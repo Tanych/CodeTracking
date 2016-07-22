@@ -11,6 +11,17 @@ class Solution(object):
             return True
         if s1==s2[::-1]:
             return True
+        
+        # the char should be the same
+        count=[0 for _ in xrange(26)]
+        
+        for i in xrange(n1):
+            count[ord(s1[i])-97]+=1
+            count[ord(s2[i])-97]-=1
+        for i in xrange(26):
+            if count[i]:
+                return False
+        
         if (s1,s2) in mapping:
             return mapping[(s1,s2)]
         
