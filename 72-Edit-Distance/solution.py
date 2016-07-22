@@ -1,4 +1,28 @@
 class Solution(object):
+    def minDistanceDPN(self,word1,word2):
+        n=len(word1)
+        m=len(word2)
+        
+        # using the array to record the op array
+        cur=[0 for _ in xrange(n+1)]
+        
+        for i in xrange(1,n+1):
+            cur[i]=i
+        
+        for j in xrange(1,m+1):
+            #when try to go to next row,record the previous result
+            pre=cur[0]
+            # the initial state is j 
+            cur[0]=j
+            for i in xrange(1,n+1):
+                tmp=cur[i]
+                if word1[i-1]==word2[j-1]:
+                    cur[i]=pre
+                else:
+                    cur[i]=min(pre+1,cur[i]+1,cur[i-1]+1)
+                pre=tmp
+        return cur[n]
+        
     def minDistance(self, word1, word2):
         """
         :type word1: str
@@ -28,6 +52,7 @@ class Solution(object):
                   dp[i][j]=dp[i-1][j]+1
               finally, we need get the min of the three
         """
+        return self.minDistanceDPN(word1,word2)
         # initial
         n=len(word1)
         m=len(word2)
@@ -48,4 +73,5 @@ class Solution(object):
                     dp[i][j]=min(dp[i-1][j]+1,dp[i][j-1]+1,dp[i-1][j-1]+1)
         return dp[n][m]
         
+
         
