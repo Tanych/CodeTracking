@@ -11,7 +11,7 @@ class Solution(object):
         That's the total target.
         """
         n=len(s)
-        if n<=numRows:
+        if n<=numRows or numRows<2:
             return s
         
         if not s or not numRows:
@@ -46,10 +46,11 @@ class Solution(object):
                                   t1       < Scan Window 12 -13
         """
         k=0
-        c=1
+        offset=1
         while k<btnum:
             t1=0
             t2=idxfirst
+            # deal with the elements in one row
             while t1<n or t2<n:
                 # the element t1+1(1 is the relative offeset) and t2-1 should be the next element
                 # t1 t2 like a two pointer, run with two diffirent direction and meet with other 
@@ -62,7 +63,9 @@ class Solution(object):
                 # move to next windows
                 t1=t2
                 t2=t2+idxfirst
-            c+=1
+            # deal with the element far 1 more than the t1,t2
+            offset+=1
+            # since there are 2 element add into the res, the btnum need -2
             k+=2
         return res
         
