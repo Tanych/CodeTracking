@@ -1,4 +1,33 @@
 class Solution(object):
+    def lengthOfLISBIS(self,nums):
+        """
+        the bin search method is trying to 
+        """
+        n=len(nums)
+        if not nums or n==1:
+            return n
+        res=[nums[0]]
+        
+        for i in xrange(1,n):
+            if nums[i]>res[-1]:
+                res.append(nums[i])
+            else:
+                # try to find the value more closer to nums[i]
+                #pos=bisect.bisect_left(res, nums[i])
+                left,right=0,len(res)
+                while left<right:
+                    mid=(left+right)/2
+                    if res[mid]==nums[i]:
+                        left=mid
+                        break
+                    if res[mid]>nums[i]:
+                        right=mid
+                    else:
+                        left=mid+1
+                res[left]=nums[i]
+                
+        return len(res)
+    
     def lengthOfLIS(self, nums):
         """
         :type nums: List[int]
@@ -11,6 +40,8 @@ class Solution(object):
         general:
         for j before i, if nums[i]>nums[j], res=max(dp[i],dp[j]+1)
         """
+        return self.lengthOfLISBIS(nums)
+        
         n=len(nums)
         if not nums or n==1:
             return n
