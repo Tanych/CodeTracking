@@ -4,44 +4,36 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        """
-        definite: dp[i] means the longest valid parentthese in s[:i]
-        initial: 0 
-        """
         n=len(s)
         if n<2:
             return 0
-        
-        dp=[0 for _ in xrange(n)]
+        # to record the valid '()'
+        stk=[]
         maxlen=0
-        for i in xrange(1,n):
-            # first we need to find the ')' and the previous is not ')'
-            # if start with '(' all post EX； (((( )
-            # Another is star with ')' no '(' before EX: )))))((((
-            if s[i]=='(' or (s[i-1]==')' and not dp[i-1]):
-                continue
+        for i in xrange(n):
+            if s[i]=='(':
+                stk.append(i)
             else:
-                # if s[i]==')' and previous is '('
-                if s[i-1]=='(':
-                    dp[i]+=2
-                    # check whether i-2 before has valid
-                    dp[i]+=dp[i-2] if i-2>=0 else 0
-                    maxlen=max(maxlen,dp[i])
-                    
-                #
-                #                   i-dp[i-1]-1       i-1 i
-                #if previous is) ( )    (         ( ) ( ) )
-                #                0 1    2
-                #
-                # check the value s[i-dp[i-1]-1] is '(', idx--2 in above example
-                elif s[i-1]==')' and (i-dp[i-1]-1)>=0 and s[i-dp[i-1]-1]=='(':
-                    dp[i]=2+dp[i-1]
-                    # plus the previous valid value, the value is idx 1 in above example
-                    dp[i]+=dp[i-dp[i-1]-2] if i-dp[i-1]-2>=0 else 0
-                    maxlen=max(maxlen,dp[i])
-                    
+                # if stk is not empty and top is '(' then math
+                if stk and s[stk[-1]]=='(':
+                    stk.pop()
+                else:
+                    stk.append(i)
+        # then stk should be the index can't be match
+        if not stk:
+            return len(s)
+        
+        # if has no match search the max
+        t1,t2=n,0
+        while stk:
+            t2=stk.pop()
+            maxlen=max(maxlen,t1-t2-1)
+            t1=t2
+        # the first element to deal with
+        # since the loop will dump if stk is empty
+        # it will not count stk[0]-0
+        maxlen=max(maxlen,t1)
         return maxlen
         
-        
-        
-        
+            
+            
