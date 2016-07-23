@@ -4,26 +4,27 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        if not nums:
-            return 0
-            
+        """
+        first method is DP:
+        define: dp[i] means the s[0:i] LIS
+        initial: dp[i]=1 since including themselves
+        general:
+        for j before i, if nums[i]>nums[j], res=max(dp[i],dp[j]+1)
+        """
         n=len(nums)
-        if n==1:
-            return 1
+        if not nums or n==1:
+            return n
         
-        minnum=min(nums)
-        idx=nums.index(minnum)
-        res=1
-        tmin=-1<<32
-        while idx<n-1:
-            tmin=min(nums[idx+1:])
-            if tmin>minnum:
-                res+=1
-                idx=nums.index(tmin)
-            else:
-                break
+        dp=[1]*n
+        
+        for i in xrange(1,n):
+            for j in xrange(i):
+                # update the max depend on dp previous
+                if nums[i]>nums[j]:
+                    dp[i]=max(dp[i],dp[j]+1)
+        # get the maxium
+        return max(dp)
             
-            
-        return res
+        
                 
             
