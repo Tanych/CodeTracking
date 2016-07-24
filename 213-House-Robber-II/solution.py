@@ -1,5 +1,29 @@
 class Solution(object):
-    def rob(self, nums):
+    def rob(self,nums):
+        if not nums:
+            return 0
+        
+        n=len(nums)
+        
+        if n<4:
+            return max(nums)
+        
+        pre=cur=0
+        for i in xrange(1,n):
+            pre,cur=cur,max(pre+nums[i],cur)
+        resnofirst=cur
+        pre=cur=0
+        for i in xrange(0,n-1):
+            """
+            t=pre
+            pre=cur
+            cur=max(cur,t+nums[i])
+            """
+            pre,cur=cur,max(pre+nums[i],cur)  
+        #resnolast=cur
+        return max(resnofirst,cur)
+        
+    def rob1(self, nums):
         """
         :type nums: List[int]
         :rtype: int
