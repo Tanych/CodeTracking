@@ -1,4 +1,7 @@
 class Solution(object):
+    def __init__(self):
+        self.count=0
+        
     def checkvalid(self,borad,row,col,n):
         """
         set board[row][col]=='Q' check whether it's valid result
@@ -26,16 +29,16 @@ class Solution(object):
             
         return True
         
-    def dfs(self,bd,n,row,res):
+    def dfs(self,bd,n,row):
         if row==n:
-            res.append(1)
+            self.count+=1
             return
         col=0
         while col!=n:
             if self.checkvalid(bd,row,col,n):
                 # the backtracking downtown
                 bd[row]=bd[row][:col]+'Q'+bd[row][col+1:]
-                self.dfs(bd,n,row+1,res)
+                self.dfs(bd,n,row+1)
                 # the backtracking uptown
                 bd[row]=bd[row][:col]+'.'+bd[row][col+1:]
             col+=1
@@ -48,8 +51,7 @@ class Solution(object):
         
         # initial the board
         board=['.'*n for _ in xrange(n)]
-        res=[]
             
-        self.dfs(board,n,0,res)
-        return len(res)
+        self.dfs(board,n,0)
+        return self.count
         
