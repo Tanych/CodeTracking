@@ -27,7 +27,7 @@ class Solution(object):
         return True
         
         
-    def solveNQueens1(self, n):
+    def solveNQueens(self, n):
         """
         :type n: int
         :rtype: List[List[str]]
@@ -35,8 +35,6 @@ class Solution(object):
         """
         why the return res is [...], it's doesn't change
         """
-        if n<4:
-            return []
         
         # initial the board
         board=['.'*n for _ in xrange(n)]
@@ -44,7 +42,15 @@ class Solution(object):
         
         def dfs(bd,n,row):
             if row==n:
-                res.append(bd)
+                #the problem in the java or c++ model
+                """
+                # res.append(bd)
+                the bd is a refence for the same address block
+                when the backtracking ended, the bd get to the initial
+                state, so it would be ['.....','....'] the modify can't be apply
+                """
+                
+                res.append(copy.deepcopy(bd))
                 return
             col=0
             while col!=n:
@@ -59,7 +65,7 @@ class Solution(object):
         dfs(board,n,0)
         return res
         
-    def solveNQueens(self, n):
+    def solveNQueens1(self, n):
         def dfs(board, row):
             if row == n:
                 result.append(['.' * x + 'Q' + '.' * (n - 1 - x) for x in board])
