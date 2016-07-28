@@ -6,24 +6,28 @@
 #         self.right = None
 
 class Solution(object):
-    def subtrees(self,lst):
-        if len(lst)==0:
+    def subtrees(self,start,end,mapping):
+        if end<start:
             return [None]
-        if len(lst)==1:
-            return [TreeNode(lst[0])]
-        
+        if start==end:
+            return [TreeNode(start)]
+            
+        if (start,end) in mapping:
+            return mapping[(start,end)]
+            
         res=[]
-        for idx,value in enumerate(lst):
+        for idx in range(start,end+1):
             # get the possible solution for left sub trees
-            left_sub=self.subtrees(lst[:idx])
+            left_sub=self.subtrees(start,idx-1,mapping)
             # get all the solution for right
-            right_sub=self.subtrees(lst[idx+1:])
+            right_sub=self.subtrees(idx+1,end,mapping)
             for left in left_sub:
                 for right in right_sub:
-                    root=TreeNode(value)
+                    root=TreeNode(idx)
                     root.left=left
                     root.right=right
                     res.append(root)
+        mapping[(start,end)]=res
         return res
         
     def generateTrees(self, n):
@@ -33,6 +37,7 @@ class Solution(object):
         """
         if n==0:
             return []
+        
         # recusive
-        return self.subtrees(range(1,n+1))
+        return self.subtrees(1,n,{})
         
