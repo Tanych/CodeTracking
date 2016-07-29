@@ -1,4 +1,18 @@
 class Solution(object):
+    def helper(self,nodes,cur):
+        if cur>=len(nodes):
+            return -1
+        if nodes[cur]=='#':
+            return cur
+        
+        left=self.helper(nodes,cur+1)
+        if left==-1:
+            return -1
+        # the right node is the last leaf node +1
+        right=self.helper(nodes,left+1)
+        return -1 if right==-1 else right
+        
+        
     def isValidSerialization(self, preorder):
         """
         :type preorder: str
@@ -8,19 +22,6 @@ class Solution(object):
         
         # the nodes lists
         nodes=preorder.split(',')
-        # using indgree and outdgree
-        # the finall total should be 0
-        # the root has no ingree 
-        degree=-1
-        for node in nodes:
-            degree+=1
-            # if degree is total larger, directly return
-            if degree>0:
-                return False
-            # for none leaf node outdgree is 2
-            if node!='#':
-                degree-=2
-        
-        return degree==0
+        return self.helper(nodes,0)==len(nodes)-1
             
                 
