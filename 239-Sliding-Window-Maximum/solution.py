@@ -7,12 +7,14 @@ class Solution(object):
         """
         if not nums or k==0:
             return []
-        queue=collections.deque()
-        for num in nums:
-            queue.append(num)
+        n=len(nums)
+        #queue=collections.deque()
+        #for num in nums:
+        #    queue.append(num)
         res=[]
-        print queue[0]
-        while k<=len(queue):
-            res.append(max([queue[i] for i in xrange(k)]))
-            queue.popleft()
+        i=0
+        while i<=n-k:
+            res.append(max(nums[i:k+i]))
+            #queue.popleft()
+            i+=1
         return res
