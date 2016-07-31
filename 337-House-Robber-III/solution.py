@@ -6,14 +6,23 @@
 #         self.right = None
 
 class Solution(object):
-    def helper(self,root,stolen):
+    def helper(self,root,mapping):
         if not root:
             return 0
-        if stolen:
-            return self.helper(root.left,False)+self.helper(root.right,False)
-        else:
-           return max(root.val+self.helper(root.left,True)+self.helper(root.right,True),self.helper(root.left,False)+self.helper(root.right,False))
-            
+        if root in mapping:
+            return mapping[root]
+        
+        max_sum=0
+        if root.left:
+            max_sum+=self.helper(root.left.left,mapping)+self.helper(root.left.right,mapping)
+        if root.right:
+            max_sum+=self.helper(root.right.left,mapping)+self.helper(root.right.right,mapping)
+        
+        # two situation get the max
+        max_sum=max(max_sum+root.val,self.helper(root.left,mapping)+self.helper(root.right,mapping))
+        mapping[root]=max_sum
+        return max_sum
+        
     def rob(self, root):
         """
         :type root: TreeNode
@@ -23,6 +32,6 @@ class Solution(object):
         1. root stolen
         2. root not stolen
         """
-        return max(self.helper(root,False),self.helper(root,True))
-        
+        mapping={}
+        return self.helper(root,mapping)
         
