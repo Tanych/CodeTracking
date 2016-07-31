@@ -19,8 +19,10 @@ class Solution(object):
         min_num=min(nums)
         max_num=max(nums)
         
-        bucket_range=max(1,int(math.ceil((max_num-min_num)/(n-1))))
-        bucket_len=int(math.ceil((max_num-min_num)/bucket_range+1))
+        # the math ceil might influence the efficency
+        #bucket_range=max(1,int(math.ceil((max_num-min_num)/(n-1))))
+        bucket_range=max(1,int((max_num-min_num-1)/(n-1))+1)
+        bucket_len=(max_num-min_num)/bucket_range+1
         buckets=[None]*bucket_len
         
         # adding to buckets
