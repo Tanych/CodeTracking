@@ -18,13 +18,12 @@ class Solution(object):
         
         if p.val>q.val:
             return self.lowestCommonAncestor(root,q,p)
-        
-        if root.val==p.val or root.val==q.val:
-            return root.val
-        if p.val<root.val and q.val>root.val:
-            return root.val
-        if p.val>root.val and q.val>root.val:
-            return self.lowestCommonAncestor(root.right,p,q)
-        if p.val<root.val and q.val<root.val:
-            return self.lowestCommonAncestor(root.left,p,q)
+            
+        while True:
+            if p.val>root.val and q.val>root.val:
+                root=root.right
+            elif p.val<root.val and q.val<root.val:
+                root=root.left
+            else:
+                return root
         
