@@ -13,4 +13,5 @@ class Solution(object):
             if n&1:
                 count+=1
             n=n>>1
+            i+=1
         return count
