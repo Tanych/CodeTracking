@@ -37,7 +37,6 @@ class Solution(object):
                 # update min and max
                 t_bucket['min']=min(t_bucket['min'],num)
                 t_bucket['max']=max(t_bucket['max'],num)
-        print buckets
         # get the possible maxgap
         # using the n.min-(n-1).max 
         res=0
