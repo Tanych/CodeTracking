@@ -6,22 +6,21 @@
 #         self.right = None
 
 class Solution(object):
-    def helper(self,root,mapping):
+    def helper(self,root):
         if not root:
-            return 0
-        if root in mapping:
-            return mapping[root]
-        
-        max_sum=0
-        if root.left:
-            max_sum+=self.helper(root.left.left,mapping)+self.helper(root.left.right,mapping)
-        if root.right:
-            max_sum+=self.helper(root.right.left,mapping)+self.helper(root.right.right,mapping)
+            return (0,0)
+        # get res from left
+        left=self.helper(root.left)
+        # get res from right
+        right=self.helper(root.right)
         
         # two situation get the max
-        max_sum=max(max_sum+root.val,self.helper(root.left,mapping)+self.helper(root.right,mapping))
-        mapping[root]=max_sum
-        return max_sum
+        # not rob root, we can do 
+        max_norob=max(left[0],left[1])+max(right[0],right[1])
+        # not rob left and right,rob root
+        max_rob=root.val+left[0]+right[0]
+        
+        return (max_norob,max_rob)
         
     def rob(self, root):
         """
@@ -32,6 +31,6 @@ class Solution(object):
         1. root stolen
         2. root not stolen
         """
-        mapping={}
-        return self.helper(root,mapping)
+        res=self.helper(root)
+        return max(res[0],res[1])
         
