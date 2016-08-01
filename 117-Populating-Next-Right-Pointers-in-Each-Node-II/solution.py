@@ -22,16 +22,12 @@ class Solution(object):
             if root.right:
                 pre.next=root.right
                 pre=pre.next
+            # to next nod    
             root=root.next
-            # if root reaches the right most
-            # go to the left level
+            
             if not root:
-                # reset pre to the new head
                 pre=newhead
-                # get the next level head 
-                root=newhead.next
-                # make the last level link broken
-                # if works well only for the last level
-                # since if root.left or root.right is not none
-                # the pre.next will change the value
+                # get new start
+                root=pre.next
                 newhead.next=None
+            
