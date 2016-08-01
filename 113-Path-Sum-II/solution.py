@@ -26,7 +26,18 @@ class Solution(object):
         if not root:
             return []
             
+        stck=[(root,[root.val])]
         res=[]
-        self.helper(root,[],res,sum_num)
+        while stck:
+            cur,val=stck.pop()
+            if cur.left:
+                stck.append((cur.left,val+[cur.left.val]))
+            if cur.right:
+                stck.append((cur.right,val+[cur.right.val]))
+            # reach leaf
+            if not cur.left and not cur.right:
+               if sum(val)==sum_num:
+                   res.append(val)
         return res
+        
         
