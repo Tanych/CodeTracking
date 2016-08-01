@@ -6,24 +6,6 @@
 #         self.right = None
 
 class Solution(object):
-    def isSymlevle(self,level):
-        i,j=0,len(level)-1
-        while i<=j:
-            if not level[i] and level[j]:
-                return False
-            if level[i] and not level[j]:
-                return False
-                
-            if not level[i] and not level[j]:
-                i+=1
-                j-=1
-                continue
-            
-            if level[i].val!=level[j].val:
-                return False
-            i+=1
-            j-=1
-        return True
         
     def isSymmetric(self, root):
         """
@@ -32,16 +14,17 @@ class Solution(object):
         """
         if not root:
             return True
-        level=[root]
+        
+        level=[(root.left, root.right)]
         
         while level:
-            if not self.isSymlevle(level):
+            n1,n2=level.pop()
+            if n1 and n2 and n1.val != n2.val:
                 return False
-            tmp=[]
-            for node in level:
-                if node:
-                    tmp.extend([node.left,node.right])
-            level=tmp
-            
+            elif n1 and n2:
+                # get the mirror ndoe
+                level.extend([(n1.left, n2.right), (n1.right, n2.left)])
+            elif n1 or n2:
+                return False
         return True
                 
