@@ -29,8 +29,24 @@ class Solution(object):
         return ''.join(resp)==''.join(resq)
         """
         # another naive way
+        """
         if p and q:
             return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
         return p==q
+        """
+        # using stack
+        if not p and not q:
+            return True
         
+        stk=[(p,q)]
+        while stk:
+            n1,n2=stk.pop()
+            if n1 and n2 and n1.val!=n2.val:
+                return False
+            elif n1 and n2:
+                stk.extend([(n1.right,n2.right),(n1.left,n2.left)])
+            elif n1 or n2:
+                return False
+                
+        return True
         
