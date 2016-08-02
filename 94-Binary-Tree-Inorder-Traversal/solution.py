@@ -11,6 +11,35 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
+        #morris traversal, using prev record the predecessor
+        cur,prev=root,None
+        res=[]
+        while cur:
+            # if reach the leftmost
+            if not cur.left:
+                res.append(cur.val)
+                # to the right
+                cur=cur.right
+            else:
+                prev=cur.left
+                # fint the predecessor of the cur
+                while prev.right and prev.right!=cur:
+                    prev=prev.right
+                # if pre.right has no node,first time get the rightmost
+                if not prev.right:
+                    prev.right=cur
+                    cur=cur.left
+                else:
+                    prev.right=None
+                    res.append(cur.val)
+                    cur=cur.right
+        return res
+        
+    def inorderTraversal_on(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
         stck,res=[],[]
         cur=root
         while cur or stck:
