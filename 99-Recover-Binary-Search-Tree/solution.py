@@ -6,55 +6,47 @@
 #         self.right = None
 
 class Solution(object):
-    def __init__(self):
-        self.f_node=None
-        self.s_node=None
-        self.f_succ_node=None
-        # if set none, can't compare at first
-        self.pre_node=TreeNode(-(1<<31))
-        
-    def rechelper(self,root):
-        if not root:
-            return
-        # left
-        self.rechelper(root.left)
-        
-        # mid
-        # if find the first root.val larger than previous node
-        # mark the first node,it would be the sitution with 5,2
-        if root.val<=self.pre_node.val:
-            if not self.f_node:
-                self.f_node=self.pre_node
-                self.f_succ_node=root
-            else:
-                # if move two node and it's normal bst then move on
-                if self.pre_node.val>=self.f_succ_node.val:
-                    self.s_node=root
-                # else found the second node
-                else:
-                    self.s_node=self.pre_node
-                    
-        self.pre_node=root
-        # right
-        self.rechelper(root.right)
-        
     def recoverTree(self, root):
         """
         :type root: TreeNode
         :rtype: void Do not return anything, modify root in-place instead.
         """
-        # Only morris can implement the traversal in constant space
-        # stack and recusive not the way
-        
-        # if we using recusive
-        
-        # for example 5,2,3,4,1
-        self.rechelper(root)
+        # EX: 5,2,3,4,1
+        # the constant space solution only, morris can work
+        cur,pre=root,None
+        # record the first and second wrong value
+        # from above example, first should be 5 and second should be 1
+        first=second=None
+        # record the predeccessor of current node
+        prede=None
+        while cur:
+            # reach the leftmost
+            if not cur.left:
+                # found the targets
+                if prede and cur.val<prede.val:
+                    if not first:
+                        first=prede
+                    second=cur
+                # move on predeceesor and current
+                prede=cur
+                cur=cur.right
+            else:
+                pre=cur.left
+                while pre.right and pre.right!=cur:
+                    pre=pre.right
+                # connect the predeccesor node to current
+                if not pre.right:
+                    pre.right=cur
+                    cur=cur.left
+                else:
+                    # found the targets
+                    if prede and cur.val<prede.val:
+                        if not first:
+                            first=prede
+                        second=cur
+                    pre.right=None
+                    prede=cur
+                    cur=cur.right
         # swap
-        #print self.f_node.val,self.s_node.val
-        if self.s_node:
-            self.f_node.val,self.s_node.val= self.s_node.val,self.f_node.val
-        else:
-            self.f_node.val,self.f_succ_node.val= self.f_succ_node.val,self.f_node.val
-        
+        first.val,second.val=second.val,first.val
         
