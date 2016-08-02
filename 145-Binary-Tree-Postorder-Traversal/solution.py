@@ -6,7 +6,53 @@
 #         self.right = None
 
 class Solution(object):
-    def postorderTraversal(self, root):
+    def reverse(self,from_node,to_node):
+        if from_node==to_node:
+            return
+        a,b,c=from_node,from_node.right,None
+        while True:
+            c=b.right
+            b.right=a
+            a=b
+            b=c
+            if a==to_node:break
+    
+        
+    def reverseadd(self,from_node,to_node,res):
+        self.reverse(from_node,to_node)
+        p=to_node
+        
+        while True:
+            res.append(p.val)
+            if p==from_node:
+                break
+            p=p.right
+        # get back
+        self.reverse(to_node,from_node)
+        
+    def postorderTraversal(self,root):
+        dump=TreeNode(-1)
+        dump.left=root
+        cur,pre=dump,None
+        res=[]
+        while cur:
+            if not cur.left:
+                cur=cur.right
+            else:
+                pre=cur.left
+                while pre.right and pre.right!=cur:
+                    pre=pre.right
+                if not pre.right:
+                    pre.right=cur
+                    cur=cur.left
+                else:
+                    self.reverseadd(cur.left,pre,res)
+                    pre.right=None
+                    cur=cur.right
+        return res
+                
+        
+    def postorderTraversal_on(self, root):
         """
         :type root: TreeNode
         :rtype: List[int]
