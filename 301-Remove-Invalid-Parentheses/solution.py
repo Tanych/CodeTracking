@@ -7,6 +7,7 @@ class Solution(object):
             if s[i]==pair[1]:count-=1
             if count>=0:continue
             for j in xrange(last_j,i+1):
+                # get rid of the last op position j and )) the last ')'
                 if s[j]==pair[1] and (s[j-1]!=pair[1] or j==last_j):
                     self.removedfs(s[:j]+s[j+1:],res,i,j,pair)
             return
@@ -20,7 +21,24 @@ class Solution(object):
             # add the final result 
             res.append(reverse_str)
         
-        
+    def bruteforce(self,s):
+        def isvalid(s):
+            count=0
+            for ch in s:
+                if ch=='(':
+                    count+=1
+                elif ch==')':
+                    count-=1
+                    if count<0:
+                        return False
+            return count==0
+        level={s}
+        while True:
+            valid=filter(isvalid, level)
+            if valid:
+                return valid
+            level={s[:i]+s[i+1:] for s in level for i in xrange(len(s))}
+            
     def removeInvalidParentheses(self, s):
         """
         :type s: str
@@ -29,7 +47,7 @@ class Solution(object):
         # it's a complex problem than what I think
         # EX: ()), ()())(), (()(() 
         # we know how to determine the valid parentheses, using stack or counter
-        
+        return self.bruteforce(s)
         res=[]
         pair=('(',')')
         self.removedfs(s,res,0,0,pair)
