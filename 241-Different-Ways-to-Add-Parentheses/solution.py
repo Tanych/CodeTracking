@@ -5,6 +5,10 @@ class Solution(object):
         :rtype: List[int]
         """
         # naive recursivie
+        mapping={}
+        if input in mapping:
+            return mapping[input]
+            
         res=[]
         for i in xrange(len(input)):
             if not input[i].isdigit():
@@ -16,6 +20,7 @@ class Solution(object):
                             res.append(left-right)
                         elif input[i]=='*':
                             res.append(left*right)
-                            
+                mapping[input]=res
+                
         return res if len(res) else [int(input)]
         
