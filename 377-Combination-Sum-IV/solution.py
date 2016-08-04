@@ -24,8 +24,9 @@ class Solution(object):
         return mapping[target]
     
     def combinationSum4(self, nums, target):
-        dp=[0]*(target+1)
-        dp[0]=1
+        # for negative num, it makes the result be infinite
+        # EX.[1,-1,2], 1,-1 can be 0, we can add bunches of couple of 0.
+        dp=[1]+[0]*target
         
         for i in xrange(1,len(dp)):
             for j in xrange(len(nums)):
