@@ -5,6 +5,9 @@ class RandomizedSet(object):
         Initialize your data structure here.
         """
         self.valset=[]
+        # record the index to remove
+        self.dictional={}
+        self.index=0
 
     def insert(self, val):
         """
@@ -12,10 +15,13 @@ class RandomizedSet(object):
         :type val: int
         :rtype: bool
         """
-        if val in self.valset:
+        try:
+            idx=self.dictional[val]
             return False
-        else:
+        except KeyError:
             self.valset.append(val)
+            self.dictional[val]=self.index
+            self.index+=1
             return True
         
 
@@ -25,10 +31,15 @@ class RandomizedSet(object):
         :type val: int
         :rtype: bool
         """
-        if val in self.valset:
-            self.valset.remove(val)
+        try:
+            idx=self.dictional[val]
+            self.valset[-1],self.valset[idx]=self.valset[idx], self.valset[-1]
+            self.dictional[self.valset[idx]]=idx
+            self.valset.pop()
+            self.index-=1
+            del self.dictional[val]
             return True
-        else:
+        except KeyError:
             return False
         
 
