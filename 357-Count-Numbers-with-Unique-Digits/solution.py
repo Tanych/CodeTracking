@@ -10,11 +10,9 @@ class Solution(object):
             return 1
         # the base
         num_base=9
-        # the first get rid of 0
-        res=9
-        times=n
-        while times>1:
-            res*=num_base
-            num_base-=1
-            times-=1
-        return res+self.countNumbersWithUniqueDigits(n-1)
+        dp,i=1,1
+        while i<=n and i<10:
+            dp+=num_base
+            num_base*=(10-i)
+            i+=1
+        return dp
