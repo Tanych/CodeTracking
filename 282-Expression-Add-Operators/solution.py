@@ -21,13 +21,15 @@ class Solution(object):
         if pos==len(num) and curres==target:
             res.append(path)
             return
-        
+        strnum=''
+        curnum=0
         for i in xrange(pos,len(num)):
             # get rid of the '0'
-            if num[pos]=='0' and i>pos:break
+            if num[pos]=='0' and i>pos: break
             # substring
-            strnum=num[pos:i+1]
-            curnum=long(strnum)
+            strnum+=num[i]
+            curnum=curnum*10+int(num[i])
+            if curnum>(1<<31): break
             
             if pos==0:
                 self.travel(num,target,i+1,path+strnum,curnum,curnum,res)
