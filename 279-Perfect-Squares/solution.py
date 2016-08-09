@@ -12,6 +12,11 @@ class Solution(object):
         dp[a+b*b]=min(dp[a]+1,dp[a+b*b])
         """
         dp=self._dp
+        while len(dp) <= n:
+            dp += min(dp[-i*i] for i in range(1, int(len(dp)**0.5+1))) + 1,
+        return dp[n]
+        
+        """
         for i in xrange(n):
             dp+=[1<<31]
         
@@ -29,3 +34,4 @@ class Solution(object):
                 b+=1
                 
         return dp[n]
+        """
