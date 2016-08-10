@@ -43,13 +43,9 @@ class Solution(object):
                if grid[i][j]=='0':
                    cntzero+=1
                    continue
-               if j>0 and grid[i][j]=='1' and grid[i][j-1]=='1':
+               if j>0 and grid[i][j-1]=='1':
                    UF.connected(i*col+j,i*col+j-1)
-               if i>0 and grid[i][j]=='1' and grid[i-1][j]=='1':
+               if i>0 and grid[i-1][j]=='1':
                    UF.connected(i*col+j,(i-1)*col+j)
-               if j+1<col and grid[i][j]=='1' and grid[i][j+1]=='1':
-                   UF.connected(i*col+j,i*col+j+1)
-               if i+1<row and grid[i][j]=='1' and grid[i+1][j]=='1':
-                   UF.connected(i*col+j,(i+1)*col+j)
         # 0 companent need be get rid of
         return abs(UF.getcount()-cntzero)
