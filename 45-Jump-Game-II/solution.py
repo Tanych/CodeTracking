@@ -13,7 +13,7 @@ class Solution(object):
         i=0
         while i<n-1:
             step+=1
-            nxstep+=1
+            #nxstep+=1
             maxstep=0
             # directly reacheable return True
             if i+nums[i]>=n-1:
