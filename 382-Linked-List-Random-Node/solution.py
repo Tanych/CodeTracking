@@ -37,6 +37,8 @@ class Solution(object):
         Returns a random node's value.
         :rtype: int
         """
+        return self.getKitem(1)[0]
+        
         res=self.head.val
         node=self.head.next
         i=2
