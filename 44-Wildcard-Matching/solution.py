@@ -26,14 +26,8 @@ class Solution(object):
         d=d, go on, meet the end.
         check the rest element in p, if all are *, true, else false;
         """
-        
-        sp=0
-        dp=0
-        dststarpos=-1
-        srcstarpos=0
-    
+        sp,dp,asterick,matchstarpos=0,0,-1,0
         while sp<len(src):
-            #print sp,dp,dststarpos,srcstarpos
             #if single ? match, just go on
             if dp<len(dst) and (src[sp]==dst[dp] or dst[dp]=='?'):
                 dp+=1
@@ -42,19 +36,19 @@ class Solution(object):
             #if match a '*', the situation becomes complex
             if dp<len(dst) and dst[dp]=='*':
                 #record the star position
-                dststarpos=dp
+                asterick=dp
                 #record the src star position
-                srcstarpos=sp
+                matchstarpos=sp
                 dp+=1
                 continue
             #if not match,go to check the start, to restart a match
-            if dststarpos!=-1:
+            if asterick!=-1:
                 #if get a start,need restart to compare
-                dp=dststarpos+1
-                #get back the src
-                sp=srcstarpos
+                dp=asterick+1
                 #go on to find the match char
-                srcstarpos+=1
+                matchstarpos+=1
+                #get back the match pos of src
+                sp=matchstarpos
                 continue
             return False
     
@@ -62,4 +56,4 @@ class Solution(object):
         while dp<len(dst) and dst[dp]=='*':
             dp+=1
     
-        return True if dp==len(dst) else False
+        return dp==len(dst)
