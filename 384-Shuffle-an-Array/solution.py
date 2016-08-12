@@ -7,17 +7,7 @@ class Solution(object):
         :type size: int
         """
         self.nums=nums
-        self.setnum=[]
-        
-        def dfs(nums,path):
-            if len(path)==len(self.nums):
-                self.setnum.append(path)
-                return
-            for i in xrange(len(nums)):
-                dfs(nums[:i]+nums[i+1:],path+[nums[i]])
-    
-        for i in xrange(len(self.nums)):
-            dfs(self.nums[:i]+self.nums[i+1:],[self.nums[i]])
+        self.shuff=[num for num in nums]
         
     def reset(self):
         """
@@ -34,8 +24,12 @@ class Solution(object):
         """
         if not self.nums:
             return []
-
-        return self.setnum[random.randint(0,len(self.setnum)-1)]
+        n=len(self.shuff)
+        for i in xrange(n-1,-1,-1):
+            idx=random.randint(0,n-1)
+            self.shuff[idx],self.shuff[i]=self.shuff[i],self.shuff[idx]
+            
+        return self.shuff
 
 
 # Your Solution object will be instantiated and called as such:
