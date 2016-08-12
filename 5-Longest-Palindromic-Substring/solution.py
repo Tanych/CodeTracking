@@ -1,4 +1,41 @@
 class Solution(object):
+    def preprocess(self,s):
+        n=len(s)
+        newstr='^'
+        for ch in s:
+            newstr+='#'+ch
+        newstr+='#$'
+        return newstr
+    
+    def manacher(self,s):
+        newstr=self.preprocess(s)
+        n=len(newstr)
+        pnum=[0]*n
+        center=right=0
+        #get rid of ^,$
+        for i in xrange(1,n-1):
+            i_mirror=center-(i-center)
+            
+            pnum[i]=min(right-i,pnum[i_mirror]) if right>center else 0
+            
+            # expand palindrome centered at i
+            while newstr[i+1+pnum[i]]==newstr[i-1-pnum[i]]:
+                pnum[i]+=1
+            # if palindrome centered at i expand past R, adjust the center to i
+            if i+pnum[i]>right:
+                center=i
+                right=i+pnum[i]
+                
+        # find the max
+        maxlen=centeridx=0
+        for i in xrange(1,n-1):
+            if pnum[i]>maxlen:
+                maxlen=pnum[i]
+                centeridx=i
+                
+        sidx=(centeridx-maxlen-1)/2
+        return s[sidx:sidx+maxlen]
+            
     def longestPalindromeDP(self,s):
         """
         define: dp[i][j] means whether subtring[i,j] is a palindrome
@@ -35,7 +72,8 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
-        return self.longestPalindromeDP(s)
+        return self.manacher(s)
+        #return self.longestPalindromeDP(s)
         
         if not s:
             return ""
