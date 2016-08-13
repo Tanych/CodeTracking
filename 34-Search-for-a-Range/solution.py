@@ -17,6 +17,8 @@ class Solution(object):
         """
         n=len(nums)
         start=self.binarysearch(nums,target)
+        # if use target==nums[start], it would occur error if[2,2] find 3,
+        # out of range
         if target in nums[start:start+1]:
             # find the first pos that equal or larger than target
             end=self.binarysearch(nums,target+1)-1
