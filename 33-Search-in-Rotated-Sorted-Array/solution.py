@@ -9,12 +9,13 @@ class Solution(object):
         n=len(nums)
         left,right=0,n-1
         while left<=right:
-            print left,right
+            # deal with the two elements[2,1]
             if right-left==1:
                 if nums[right]==target:
                     return right
                 elif nums[left]==target:
                     return left
+                    
             mid=left+(right-left)/2
             if nums[mid]==target:
                 return mid
