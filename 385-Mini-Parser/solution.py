@@ -63,11 +63,11 @@ class Solution(object):
                 if len(stck)>1:
                     cur=stck.pop()
                     stck[-1].add(cur)
-                #i=j+1
             # add singel int to the nestint
             elif s[j]==',':
                 if s[j-1].isdigit():
                     stck[-1].add(NestedInteger(int(s[i:j])))
+                # avoid [-1,-2] single int no other nest
                 i=j+1
         return stck[-1]
    
