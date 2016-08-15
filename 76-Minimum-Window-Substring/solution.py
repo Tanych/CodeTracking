@@ -12,7 +12,7 @@ class Solution(object):
         # using count to record the count balance
         minstart,start,end,count=0,0,0,len(t)
         # to ge the min lenght of the windows
-        minlen=2<<31-1
+        minlen=(1<<31)-1
         
         while end<len(s):
             # if s[end] exsit in hmap,
@@ -40,6 +40,6 @@ class Solution(object):
                     count+=1
                 # move on
                 start+=1
-        return "" if minlen==2<<31-1 else s[minstart:minstart+minlen]
+        return "" if minlen==(1<<31)-1 else s[minstart:minstart+minlen]
         
         
