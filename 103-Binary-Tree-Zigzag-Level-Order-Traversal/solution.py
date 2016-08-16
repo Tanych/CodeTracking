@@ -14,35 +14,24 @@ class Solution(object):
         if not root:
             return []
             
-        stck=[[root]]
-        level=0
-        # aleays check the last one
-        while len(stck[-1])!=0:
-            level+=1
-            tmp=[]
-            # if the even level
-            if not level&1:
-                for i in xrange(len(stck[-1])-1,-1,-1):
-                    if stck[-1][i].left:
-                        tmp.append(stck[-1][i].left)
-                    if stck[-1][i].right:
-                        tmp.append(stck[-1][i].right)
-            # reverse
-            else:
-                for i in xrange(len(stck[-1])-1,-1,-1):
-                    if stck[-1][i].right:
-                        tmp.append(stck[-1][i].right)
-                    if stck[-1][i].left:
-                        tmp.append(stck[-1][i].left)
-            stck.append(tmp)
-            
         res=[]
-        # deal with the stack res
-        for i in xrange(len(stck)):
+        nlevel=0
+        level=[root]
+        # aleays check the last one
+        while level:
+            nlevel+=1
             tmp=[]
-            for j in xrange(len(stck[i])):
-                tmp.append(stck[i][j].val)
-            if tmp:
-                res.append(tmp)
+            vals=[]
+            for node in level:
+                vals.append(node.val)
+                if node.left:
+                    tmp.append(node.left)
+                if node.right:
+                    tmp.append(node.right)
+            if nlevel&1:
+                res.append(vals)
+            else:
+                res.append(vals[::-1])
+            level=tmp
         return res
         
