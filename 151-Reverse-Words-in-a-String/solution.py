@@ -6,18 +6,25 @@ class Solution(object):
         """
         if not s:
             return ""
-        #using split to get the words
-        words=s.split()
-        # two pointer to get the reverse
-        i,j=0,len(words)-1
-        while i<j:
-            words[i],words[j]=words[j],words[i]
-            i+=1
-            j-=1
-        resstr=''
-        for word in words:
-            resstr+=word+' '
+        stck=[]
+        tstr=''
+        res=''
+        for i in xrange(len(s)):
+            if s[i]==' ':
+                # for the continous space skip
+                if not tstr:continue
+                stck.append(tstr)
+                tstr=''
+            else:
+                tstr+=s[i]
+        # the last possible string
+        if tstr:
+            stck.append(tstr)
+        
+        while stck:
+            res+=stck.pop()+' '
+        
             
-        return resstr.strip()
+        return res[:-1]
         
             
