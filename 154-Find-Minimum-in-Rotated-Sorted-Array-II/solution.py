@@ -19,7 +19,7 @@ class Solution(object):
                 start=mid+1
             else:
                 end=mid
-                # if all larger than vmid
+                # if all less than vmid
                 if nums[start]<=vmid:
                     return nums[start]
         return nums[start]
