@@ -4,23 +4,19 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        # using two pointer to find the trends of array
         n=len(nums)
-        # two pointer
+        if not n:
+            return -1
         start,end=0,n-1
-        # factor to compare
-        last=nums[n-1]
-        
-        # finding the pivot
-        while start+1<end:
+
+        while start<end:
             mid=start+(end-start)/2
-            if nums[mid]<last:
-                end=mid
+            vmid=nums[mid]
+            if nums[end]<vmid:
+                start=mid+1
             else:
-                start=mid
-        # decide which one is the answer
-        if nums[start]>last:
-            return nums[end]
-        else:
-            return nums[start]
-        
+                end=mid
+                # if all less than vmid
+                if nums[start]<=vmid:
+                    return nums[start]
+        return nums[start]
