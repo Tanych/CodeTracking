@@ -1,5 +1,8 @@
 class Solution(object):
     def binsearch(self,nums,target):
+        if nums[0]>target:
+            return -1
+            
         left,right=0,len(nums)-1
         while left<=right:
             mid=(left+right)/2
@@ -19,6 +22,9 @@ class Solution(object):
                 idx2=self.binsearch(nums[i+1:],target-nums[i])
                 if idx2!=-1:
                     return [i+1,i+1+idx2+1]
+            else:
+                break
+            
         return [-1,-1]
         
     def twoSum(self, numbers, target):
@@ -27,7 +33,7 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        return self.twosum2(numbers,target)
+        #return self.twosum2(numbers,target)
         n=len(numbers)
         if n<2: return [-1,-1]
         hashmap={}
