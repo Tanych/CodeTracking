@@ -10,13 +10,20 @@ class Solution(object):
         :type s: str
         :rtype: List[str]
         """
+        mapping={'A':0,'C':1,'G':2,'T':3}
+        
         if len(s)<=10:
             return []
-            
-        hashmap={}
+        
+        hashmapping={}
         res=[]
         for i in xrange(len(s)-9):
-            hashmap[self.str2int(s[i:i+10])]=hashmap.get(self.str2int(s[i:i+10]),0)+1
-            if hashmap[self.str2int(s[i:i+10])]==2:
+            v=0
+            for j in xrange(i,i+10):
+               v<<=2
+               v|=mapping[s[j]]
+               
+            hashmapping[v]=hashmapping.get(v,0)+1
+            if hashmapping[v]==2:
                 res.append(s[i:i+10])
         return res
