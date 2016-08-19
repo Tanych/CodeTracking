@@ -3,6 +3,7 @@ class Solution(object):
         self._dp=[0]
     
     def dpsolution(self,n):
+        # DP TLE....
         if n<=0:
             return 0
         dp=self._dp
@@ -29,7 +30,7 @@ class Solution(object):
         n=a+b*b
         dp[a+b*b]=min(dp[a]+1,dp[a+b*b])
         """
-        return self.dpsolution(n)
+        #return self.dpsolution(n)
         
         dp=self._dp
         while len(dp) <= n:
