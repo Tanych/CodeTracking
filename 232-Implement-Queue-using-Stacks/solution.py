@@ -3,30 +3,35 @@ class Queue(object):
         """
         initialize your data structure here.
         """
-        self.stack=collections.deque()
+        self.instck=[]
+        self.outstck=[]
 
     def push(self, x):
         """
         :type x: int
         :rtype: nothing
         """
-        stack=self.stack
-        stack.appendleft(x)
+        self.instck.append(x)
   
     def pop(self):
         """
         :rtype: nothing
         """
-        return self.stack.pop() 
+        self.peek()
+        return self.outstck.pop() 
 
     def peek(self):
         """
         :rtype: int
         """
-        return self.stack[-1]
+        if not self.outstck:
+            while self.instck:
+                self.outstck.append(self.instck.pop())
+        return self.outstck[-1]
 
     def empty(self):
         """
         :rtype: bool
         """
-        return not len(self.stack)
+        return not len(self.instck) and not len(self.outstck)
+        
