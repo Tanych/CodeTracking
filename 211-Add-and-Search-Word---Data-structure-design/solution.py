@@ -67,7 +67,7 @@ class WordDictionary(object):
         if curnode:
             return  True and curnode.isend
         else:
-            return False and curnode.isend
+            return False
                     
             
 # Your WordDictionary object will be instantiated and called as such:
