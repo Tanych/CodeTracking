@@ -5,8 +5,11 @@ class Solution(object):
     def dpsolution(self,n):
         if n<=0:
             return 0
+        dp=self._dp
         
-        dp=[1<<31]*(n+1)
+        for i in xrange(1,n+1):
+            dp+=[1<<31]
+            
         dp[0]=0
         for k in xrange(1,n+1):
             #For each i, it must be the sum of some number (i - j*j) and 
