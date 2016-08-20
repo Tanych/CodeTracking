@@ -28,6 +28,44 @@ class Solution(object):
                 
         return len(res)
     
+    def binsearch(self,nums,left,right,target):
+        while left<=right:
+            mid=left+(right-left)/2
+            if nums[mid]==target:
+                return mid
+            elif nums[mid]>target:
+                right=mid-1
+            else:
+                left=mid+1
+        return left
+        
+    def lengthOfLIS3(self, nums):
+        """
+        using patience sort to find the subsequence
+        """
+        n=len(nums)
+        if not n:
+            return 0
+        
+        # record the tails
+        nlen=0
+        tails=[0]*n
+        tails[0]=nums[0]
+        
+        for i in xrange(1,n):
+            # s1 less than smallest
+            if nums[i]<tails[0]:
+                tails[0]=nums[i]
+            # s2 larger than lagest
+            elif nums[i]>tails[nlen]:
+                nlen+=1
+                tails[nlen]=nums[i]
+            # in the mid
+            else:
+                tails[self.binsearch(tails,0,nlen,nums[i])]=nums[i]
+        #print tails[:nlen+1]
+        return nlen+1
+        
     def lengthOfLIS(self, nums):
         """
         :type nums: List[int]
@@ -40,7 +78,7 @@ class Solution(object):
         general:
         for j before i, if nums[i]>nums[j], res=max(dp[i],dp[j]+1)
         """
-        return self.lengthOfLISBIS(nums)
+        return self.lengthOfLIS3(nums)
         
         n=len(nums)
         if not nums or n==1:
