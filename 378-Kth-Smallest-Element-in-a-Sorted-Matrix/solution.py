@@ -1,4 +1,20 @@
 class Solution(object):
+    def minheap(self,matrix,k):
+        """
+        the same idea for get the kth element from n list
+        """
+        row=len(matrix)
+        if row<=0:return -1
+        col=len(matrix[0])
+        heap=[]
+        for j in xrange(col):
+            heapq.heappush(heap,(matrix[0][j],0,j))
+        for i in xrange(k-1):
+            peak,ridx,cidx=heapq.heappop(heap)
+            if ridx<row-1:
+               heapq.heappush(heap,(matrix[ridx+1][cidx],ridx+1,cidx))
+        return heapq.heappop(heap)[0]
+        
     def kthSmallest(self, matrix, k):
         """
         :type matrix: List[List[int]]
@@ -12,6 +28,8 @@ class Solution(object):
         
         if we use quickselect it would be o(number of element) it's would be O(n^2)
         """
+        return self.minheap(matrix,k)
+        
         n=len(matrix)
         left,right=matrix[0][0],matrix[n-1][n-1]
         
