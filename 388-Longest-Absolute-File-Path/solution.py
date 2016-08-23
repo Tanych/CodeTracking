@@ -1,4 +1,21 @@
 class Solution(object):
+    def python2(self,input):
+        total,maxlen=0,0
+        stck=[]
+        for line in input.split('\n'):
+            isfile=False
+            name=line.lstrip('\t')
+            if '.' in name:
+                isfile=True
+            depth=len(line)-len(name)
+            while len(stck)>depth:
+                total-=stck.pop()
+            stck.append(len(name))
+            total+=stck[-1]
+            if isfile:
+                maxlen=max(maxlen,total+len(stck)-1)
+        return maxlen
+            
     def pythonway(self,input):
         path={0:0}
         maxlen=0
@@ -16,7 +33,7 @@ class Solution(object):
         :type input: str
         :rtype: int
         """
-        return self.pythonway(input)
+        return self.python2(input)
         
         # the stck depth also indicate the depth of the dir
         stck,total,maxlen,i=[],0,0,0
