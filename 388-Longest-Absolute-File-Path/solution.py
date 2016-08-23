@@ -1,18 +1,16 @@
 class Solution(object):
     def python2(self,input):
-        total,maxlen=0,0
-        stck=[]
+        total,maxlen,stck=0,0,[]
         for line in input.split('\n'):
-            isfile=False
-            name=line.lstrip('\t')
-            if '.' in name:
-                isfile=True
-            depth=len(line)-len(name)
+            pathname=line.lstrip('\t')
+            depth=len(line)-len(pathname)
+            # if reachs previous higher subdir,pop the deeper ones
             while len(stck)>depth:
                 total-=stck.pop()
-            stck.append(len(name))
+            stck.append(len(pathname))
             total+=stck[-1]
-            if isfile:
+            # if reaches path end
+            if '.' in pathname:
                 maxlen=max(maxlen,total+len(stck)-1)
         return maxlen
             
