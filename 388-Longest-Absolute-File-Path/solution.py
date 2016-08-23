@@ -1,9 +1,23 @@
 class Solution(object):
+    def pythonway(self,input):
+        path={0:0}
+        maxlen=0
+        for line in input.split('\n'):
+            name=line.lstrip('\t')
+            depth=len(line)-len(name)
+            if '.' in name:
+                maxlen=max(maxlen,path[depth]+len(name))
+            else:
+                path[depth+1]=path[depth]+len(name)+1
+        return maxlen
+        
     def lengthLongestPath(self, input):
         """
         :type input: str
         :rtype: int
         """
+        return self.pythonway(input)
+        
         # the stck depth also indicate the depth of the dir
         stck,total,maxlen,i=[],0,0,0
         while i<len(input):
