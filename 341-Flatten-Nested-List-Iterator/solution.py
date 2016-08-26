@@ -31,12 +31,24 @@ class NestedIterator(object):
         :type nestedList: List[NestedInteger]
         """
         self.stack=[]
-        
+        self.hashmaping={}
+        self.maxdepth=0
         # reverse the order, when we pop we get the first
         for i in xrange(len(nestedList)-1,-1,-1):
             self.stack.append(nestedList[i])
-               
-
+        
+        unweight=weighted=0
+        while len(nestedList):
+            nextlevel=[]
+            for li in nestedList:
+                if li.isInteger():
+                    unweight+=li.getInteger()
+                else:
+                    nextlevel.extend(li.getList())
+            weighted+=unweight
+            nestedList=nextlevel
+        #print weighted
+        
     def next(self):
         """
         :rtype: int
