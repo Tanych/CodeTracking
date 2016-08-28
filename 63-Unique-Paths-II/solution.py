@@ -4,28 +4,23 @@ class Solution(object):
         :type obstacleGrid: List[List[int]]
         :rtype: int
         """
-        row=len(obstacleGrid)
-        col=len(obstacleGrid[0])
-        if obstacleGrid[row-1][col-1] == 1 or obstacleGrid[0][0] == 1:
+        row,col=len(obstacleGrid),len(obstacleGrid[0])
+        if obstacleGrid[row-1][col-1]==1 or obstacleGrid[0][0]==1:
             return 0
-            
-        dp=[0 for _ in xrange(col)]
+        dp=[0 for _ in xrange(col+1)]
         dp[0]=1
-        for j in xrange(1,col):
-            if not obstacleGrid[0][j]:
+        for j in xrange(1,col+1):
+            if not obstacleGrid[0][j-1]:
                 dp[j]=dp[j-1]
             else:
                 break
         # check the dp[i][j]
         for i in xrange(1,row):
-            for j in xrange(0,col):
-                if j==0:
-                    if obstacleGrid[i][j]==1:
-                        dp[j]=0
+            dp[0]=0
+            for j in xrange(1,col+1):
+                if obstacleGrid[i][j-1]==0:
+                    dp[j]=dp[j-1]+dp[j]
                 else:
-                    if obstacleGrid[i][j]==0:
-                        dp[j]=dp[j-1]+dp[j]
-                    else:
-                        dp[j]=0
-        return dp[col-1]
+                    dp[j]=0
+        return dp[col]
         
