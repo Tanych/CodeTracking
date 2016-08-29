@@ -5,6 +5,7 @@ class Solution(object):
         :type k: int
         :rtype: strs
         """
+        if k==0: return strs
         n=len(strs)
         maxheap=[]
         cnt=[0]*26
@@ -13,19 +14,23 @@ class Solution(object):
         res=[]
         # building max heap
         for i in xrange(26):
-            heapq.heappush(maxheap,(-cnt[i],chr(i+97)))
+            if cnt[i]:
+                heapq.heappush(maxheap,(-cnt[i],chr(i+97)))
         
-        while len(res)<n:
+        while maxheap:
             # record the remaining
             remaining=[]
             t=min(k,n)
             for i in xrange(t):
                 if not maxheap: return ""
-                cnt,ch=heapq.heappop(maxheap)
+                ct,ch=heapq.heappop(maxheap)
                 res.append(ch)
-                tcnt=-cnt-1
+                tcnt=-ct-1
                 if tcnt:
                     remaining.append((-tcnt,ch))
+                # mark the left length
+                n-=1
+                
             for ele in remaining:
                 heapq.heappush(maxheap,ele)
                 
