@@ -7,18 +7,19 @@
 
 class Solution(object):
     def __init__(self):
-        self.lmapping={}
+        self.lmapping=[]
     
     def helper(self,root):
         if not root: return -1
-        if not root.left and not root.right:
-            self.lmapping[0]=self.lmapping.get(0,[])+[root.val]
-            return 0
         left=self.helper(root.left)
         right=self.helper(root.right)
-        res=max(left,right)+1
-        self.lmapping[res]=self.lmapping.get(res,[])+[root.val]
-        return res
+        height=max(left,right)+1
+        if height<len(self.lmapping):
+            self.lmapping[height].append(root.val)
+        else:
+            self.lmapping.append([root.val])
+            
+        return height
         
     def findLeaves(self, root):
         """
@@ -27,5 +28,5 @@ class Solution(object):
         """
         
         self.helper(root)
-        return self.lmapping.values()
+        return self.lmapping
         
