@@ -27,12 +27,29 @@ class Solution(object):
         self.dfs(root.left)
         # try right
         self.dfs(root.right)
+    
+    def bottomup(self,root,parent):
+        # return (size,minval,maxval)
+        if not root: return (0,parent.val,parent.val)
+        left=self.bottomup(root.left,root)
+        right=self.bottomup(root.right,root)
+        if root.val<left[2] or root.val>right[1] or left[0]==-1 or right[0]==-1:
+            return (-1,0,0)
+        newsize=left[0]+right[0]+1
+        self.maxval=max(self.maxval,newsize)
+        return (newsize,left[1],right[2])
+        
         
     def largestBSTSubtree(self, root):
         """
         :type root: TreeNode
         :rtype: int
         """
-        self.dfs(root)
+        # up-bottom
+        # self.dfs(root)
+        # bottom-up
+        # O(n) solution
+        if not root: return 0
+        self.bottomup(root,None)
         return self.maxval
         
