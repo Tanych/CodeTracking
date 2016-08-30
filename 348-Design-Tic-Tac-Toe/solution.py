@@ -5,7 +5,9 @@ class TicTacToe(object):
         Initialize your data structure here.
         :type n: int
         """
-        self.grid=[[0 for _ in xrange(n)] for _ in xrange(n)]
+        self.rows=[0]*n
+        self.cols=[0]*n
+        self.digal=self.revdigal=0
         self.size=n
 
     def move(self, row, col, player):
@@ -23,53 +25,15 @@ class TicTacToe(object):
         :type player: int
         :rtype: int
         """
-        if row<0 or row>=self.size or col<0 or col>=self.size:
-            return -1
-            
-        self.grid[row][col]=player
-        
-        # column
-        i=0
-        while i<self.size:
-            if self.grid[row][i]==player:
-                i+=1
-            else:
-                break
-        if i==self.size:
-            return player
-        
-        # row
-        i=0
-        while i<self.size:
-            if self.grid[i][col]==player:
-                i+=1
-            else:
-                break
-        if i==self.size:
-            return player
-        
-        # diagonal
-        if row==col:
-            i=0
-            while i<self.size:
-                if self.grid[i][i]==player:
-                    i+=1
-                else:
-                    break
-            if i==self.size:
+        add=1 if player==1 else -1
+        self.rows[row]+=add
+        self.cols[col]+=add
+        self.digal+=add if row==col else 0
+        self.revdigal+=add if row+col==self.size-1 else 0
+        if abs(self.rows[row])==self.size or abs(self.cols[col])==self.size \
+            or abs(self.digal)==self.size or abs(self.revdigal)==self.size:
                 return player
         
-        # reverse diagonal     
-        if row+col==self.size-1: 
-            i=0
-            while i<self.size:
-                if self.grid[i][self.size-i-1]==player:
-                    i+=1
-                else:
-                    break
-            if i==self.size:
-                return player
-                
         return 0
 
 
