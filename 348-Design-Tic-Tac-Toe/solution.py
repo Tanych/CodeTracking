@@ -27,15 +27,18 @@ class TicTacToe(object):
             return -1
             
         self.grid[row][col]=player
-        j=0
-        while j<self.size:
-            if self.grid[row][j]==player:
-                j+=1
+        
+        # column
+        i=0
+        while i<self.size:
+            if self.grid[row][i]==player:
+                i+=1
             else:
                 break
-        if j==self.size:
+        if i==self.size:
             return player
         
+        # row
         i=0
         while i<self.size:
             if self.grid[i][col]==player:
@@ -45,6 +48,7 @@ class TicTacToe(object):
         if i==self.size:
             return player
         
+        # diagonal
         if row==col:
             i=0
             while i<self.size:
@@ -54,7 +58,8 @@ class TicTacToe(object):
                     break
             if i==self.size:
                 return player
-                
+        
+        # reverse diagonal     
         if row+col==self.size-1: 
             i=0
             while i<self.size:
