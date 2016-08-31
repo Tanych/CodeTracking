@@ -22,7 +22,7 @@ class Solution(object):
         if any(knows(candidate,i) for i in xrange(candidate)): 
             return -1
         # check all know candidate
-        if any(not knows(i,candidate) for i in xrange(n)):
+        if not all(knows(i,candidate) for i in xrange(n)):
             return -1
                 
         return candidate
