@@ -11,7 +11,16 @@ class Solution(object):
         return True
         
         #---O(1)
-        
+        i=len(postorder)
+        maxnum=1<<31
+        for j in xrange(len(postorder)-1,-1,-1):
+            if postorder[i]>maxnum:return False
+            while i<len(postorder) and postorder[j]<postorder[i]:
+                maxnum=postorder[i]
+                i+=1
+            i-=1
+            postorder[i]=nums[j]
+        return True
     def verifyPreorder(self, preorder):
         """
         :type preorder: List[int]
