@@ -6,10 +6,11 @@ class Solution(object):
             if len(path)>1:
                 self.res.append(path)
             return
-        for i in xrange(start,num+1):
+        for i in xrange(start,int(math.sqrt(num))+1):
             if num%i==0:
                 self.helper(num/i,i,path+[i])
         
+        self.helper(1,num,path+[num])
             
     def getFactors(self, n):
         """
