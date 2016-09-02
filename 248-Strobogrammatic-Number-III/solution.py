@@ -29,8 +29,6 @@ class Solution(object):
                     if self.mapping[num] <= int(str_num[slen-1-spos]):
                         # record the less cnt
                         lesscnt += 1
-                        # if match on the middle, it means this number can fit
-                        # 89768 match 89789, 8,9 all equal 6<8 and 8<9, two counts
                         if pstr < 3 and lesscnt == (slen + 1) / 2:
                             rescnt += 1
                     break
@@ -45,8 +43,11 @@ class Solution(object):
         # count the number less than str_num with length less than str len
         if int(str_num) < 0: return 0
         if slen > 1:
-            # get rid of 0, it's 4/5 of all the total.
-            rescnt = 3 + sum([self.cntmemo[i] for i in xrange(2,slen)]) * 4 / 5
+            # len==1
+            rescnt = 3
+            # len>2
+            for i in xrange(2, slen):
+                rescnt += self.cntmemo[i] * 4 / 5
         # count the number with the same length
         return rescnt+self.count_same_len(str_num)
 
