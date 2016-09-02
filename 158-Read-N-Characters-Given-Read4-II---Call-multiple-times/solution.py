@@ -30,6 +30,7 @@ class Solution(object):
                 # copy the left
                 while j<nlen:
                     self.remain.append(tmp[j])
+                    j+=1
             else:
                 # copy all to the buf
                 for j in xrange(nlen):
