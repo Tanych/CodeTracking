@@ -4,7 +4,7 @@ class TwoSum(object):
         """
         initialize your data structure here
         """
-        self.number=set()
+        self.numbers=[]
         self.mapping={}
 
     def add(self, number):
@@ -12,8 +12,11 @@ class TwoSum(object):
         Add the number to an internal data structure.
         :rtype: nothing
         """
-        self.mapping[number]=self.mapping.get(number,0)+1
-        self.number.add(number)
+        if number not in self.mapping:
+            self.mapping[number]=1
+            self.numbers.append(number)
+        else:
+            self.mapping[number]+=1
         
 
     def find(self, value):
@@ -22,7 +25,7 @@ class TwoSum(object):
         :type value: int
         :rtype: bool
         """
-        for num in self.number:
+        for num in self.numbers:
             target=value-num
             if target in self.mapping:
                 if target==num and self.mapping[target]<2:
