@@ -18,10 +18,8 @@ class Solution(object):
                 i+=1
                 continue
             onecnt=0
-            j=0
-            while j<len(intbit[i]) and intbit[i][j]!='0':
+            while onecnt<len(intbit[i]) and intbit[i][onecnt]!='0':
                 onecnt+=1
-                j+=1
             # if has only one bit start,invalid
             if onecnt==1:
                 return False
