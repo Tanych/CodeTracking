@@ -16,7 +16,6 @@ class Solution(object):
                 i = j
         for k in xrange(len(res_list)):
             res_str += res_list[k] * cnt_list[k]
-        print res_str
         return res_str
 
     def decodeString(self, strs):
