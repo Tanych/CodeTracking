@@ -1,0 +1,83 @@
+def rle_decoding(self, strs):
+    res_list, cnt_list, res_str, cnt, i = [], [], '', 0, 0
+    while i < len(strs):
+        if strs[i].isdigit():
+            cnt += cnt * 10 + int(strs[i])
+            i += 1
+        else:
+            j = i
+            while j < len(strs) and not strs[j].isdigit():
+                j += 1
+            res_list.append(strs[i:j])
+            cnt_list.append(cnt)
+            cnt = 0
+            i = j
+    for i in xrange(len(res_list)):
+        res_str += res_list[i] * cnt_list[i]
+    return res_str
+
+def decompress(self, strs):
+    stck = []
+    for i in xrange(len(strs)):
+        if strs[i] == ']':
+            tstr = ''
+            while stck and stck[-1] != '[':
+                tstr += stck.pop()
+            if stck:
+                # pop out the '['
+                stck.pop()
+                # add the number
+                tstr += stck.pop()
+                # add to result
+                stck.append(self.rle_decoding(tstr[::-1]))
+        else:
+            stck.append(strs[i])
+    return ''.join(stck) if stck else ''
+
+def compress(self, strs):
+    """
+     compress with the shortest pattern, EX. aaaac-->4a1c not 2[aa]1c
+    :param strs:
+    :return:
+    """
+    n = len(strs)
+    if n <= 1:
+        return strs
+    max_len, res_str = n, strs
+    for l in xrange(n / 2, 0, -1):
+        i, j = 0, l
+        while j < n:
+            # find the first equal start pointer
+            while j < n and strs[j] != strs[i]:
+                j += 1
+                i += 1
+            # end pointer move forward
+            end_i, end_j = i, j
+            while end_j < n and strs[end_i] == strs[end_j]:
+                end_i += 1
+                end_j += 1
+            # if the diff len large than pattern len, it should occurs pattern
+            if end_j - i >= 2 * l:
+                # find the pattern
+                start_j = j
+                while i < start_j and end_j - i >= 2 * l:
+                    # EX: abc abc abc (post)a(end_j)
+                    post_pos = end_j - (end_j - i) % l
+                    pre_str, mid_str, post_str = self.compress(strs[:i]), \
+                                                 self.compress(strs[i:j]), self.compress(strs[post_pos:])
+                    mutip_cnt = (end_j - i) / l
+                    sum_letter = len(filter(lambda x: x.isalpha(), pre_str + mid_str + post_str))
+                    # sum letter get smaller is the better choice
+                    if sum_letter < max_len:
+                        max_len = sum_letter
+                        res_str = pre_str + str(mutip_cnt) + '[' + mid_str + ']' + post_str
+                    # move on check the same pattern len
+                    i += 1
+                    j += 1
+                return res_str
+            else:
+                # restart form end pointer
+                i = end_i
+                j = end_j
+
+    return res_str
