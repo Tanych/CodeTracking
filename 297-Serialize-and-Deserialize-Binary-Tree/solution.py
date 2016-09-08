@@ -13,18 +13,20 @@ class Codec:
         :type root: TreeNode
         :rtype: str
         """
-        def helper(root):
-            if root:
-                res.append(str(root.val))
-                helper(root.left)
-                helper(root.right)
-            else:
-                res.append('#')
+        if not root: return ""
         res=[]
-        helper(root)
-        # using the space ' ' to sperate in order to get iteration
+        queue=collections.deque([])
+        queue.append(root)
+        while queue:
+            node=queue.popleft()
+            if not node:
+                res.append('#')
+                continue
+            res.append(str(node.val))
+            queue.append(node.left)
+            queue.append(node.right)
         return ' '.join(res)
-
+        
 
     def deserialize(self, data):
         """Decodes your encoded data to tree.
@@ -32,16 +34,30 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        def helper():
-            val=next(iter_nodes)
-            if val=='#':
-                return None
-            root=TreeNode(int(val))
-            root.left=helper()
-            root.right=helper()
-            return root
-        iter_nodes=iter(data.split())
-        return helper()
+        if not data: return None
+        # save the node
+        queue=collections.deque([])
+        treenodes=data.split()
+        root=TreeNode(int(treenodes[0]))
+        queue.append(root)
+        
+        i=1
+        while i<len(treenodes):
+            parent=queue.popleft()
+            if treenodes[i]!='#':
+                left=TreeNode(int(treenodes[i]))
+                parent.left=left
+                queue.append(left)
+            i+=1
+            if  treenodes[i]!='#':
+                right=TreeNode(int(treenodes[i]))
+                parent.right=right
+                queue.append(right)
+            i+=1
+        
+        return root
+            
+        
 
 # Your Codec object will be instantiated and called as such:
 # codec = Codec()
