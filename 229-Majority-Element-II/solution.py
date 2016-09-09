@@ -11,6 +11,7 @@ class Solution(object):
                 if nums[i] in cntmap:
                     cntmap[nums[i]]+=1
                     continue
+                # esle find the 0 as possible del
                 find=False
                 for key in cntmap:
                     if cntmap[key]==0:
@@ -22,7 +23,6 @@ class Solution(object):
                 if not find:
                     for key in cntmap:
                         cntmap[key]-=1
-        print cntmap
         # check the final
         res=[n for n in cntmap if nums.count(n)>(len(nums)/k)]
         return res
