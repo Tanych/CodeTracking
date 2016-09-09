@@ -1,9 +1,38 @@
 class Solution(object):
+    def majortyElementK(self, nums,k):
+        cntmap,res={},[]
+        if k<2: return res
+        n=len(nums)
+        if not n: return res
+        for i in xrange(n):
+            if len(cntmap)<k-1:
+                cntmap[nums[i]]= cntmap.get(nums[i],0)+1
+            else:
+                if nums[i] in cntmap:
+                    cntmap[nums[i]]+=1
+                    continue
+                find=False
+                for key in cntmap:
+                    if cntmap[key]==0:
+                        del cntmap[key]
+                        cntmap[nums[i]]= cntmap.get(nums[i],0)+1
+                        find=True
+                        break
+                # if not cnt==0, all decrease one
+                if not find:
+                    for key in cntmap:
+                        cntmap[key]-=1
+        print cntmap
+        # check the final
+        res=[n for n in cntmap if nums.count(n)>(len(nums)/k)]
+        return res
+            
     def majorityElement(self, nums):
         """
         :type nums: List[int]
         :rtype: List[int]
         """
+        return self.majortyElementK(nums,3)
         # The max number of majority element of n/k is k-1
         # the value, count maxium is 2, so it's O(1)
         value = []
