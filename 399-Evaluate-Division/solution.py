@@ -1,21 +1,21 @@
 class Solution(object):
-    def qurey(self,graph,mapping,start,end,visited):
+    def dfsquery(self,graph,vals,start,end,visited):
         if start==end and start in graph:
             return 1.0
-            
-        if (start,end) in mapping:
-            return mapping[(start,end)]
-        
+        if (start,end) in vals:
+            return vals[(start,end)]
+        # dfs query
         if start in graph:
             for subnode in graph[start]:
-                if subnode not in visited:
-                    visited.add(subnode)
-                    ressub=self.qurey(graph,mapping,subnode,end,visited)
-                    if ressub!=-1.0:
-                        return mapping[(start,subnode)]*ressub
-                    else:
-                        visited.discard(subnode)
-                        return -1.0
+                if subnode in visited:
+                    continue
+                visited.add(subnode)
+                ressub=self.dfsquery(graph,vals,subnode,end,visited)
+                if ressub!=-1.0:
+                    return vals[(start,subnode)]*ressub
+                else:
+                    visited.discard(subnode)
+                    return -1.0
         return -1.0
         
         
@@ -26,24 +26,25 @@ class Solution(object):
         :type query: List[List[str]]
         :rtype: List[float]
         """
-        mapping={}
-        graph={}
-        
+        vals,graph={},{}
         n=len(equations)
-        for i in xrange(n):
-            graph[equations[i][0]]=graph.get(equations[i][0],[])+[equations[i][1]]
-            graph[equations[i][1]]=graph.get(equations[i][1],[])+[equations[i][0]]
-            mapping[(equations[i][0],equations[i][1])]=values[i]
-            mapping[(equations[i][1],equations[i][0])]=1.0/values[i]
-        #print graph ,mapping
         
+        # building directed graph
+        for i in xrange(n):
+            a,b=equations[i][0],equations[i][1]
+            graph[a]=graph.get(a,[])+[b]
+            graph[b]=graph.get(b,[])+[a]
+            vals[(a,b)]=values[i]
+            vals[(b,a)]=1.0/values[i]
+            
         qlen=len(queries)
         res=[0.0]*(qlen)
         for i in xrange(qlen):
-            res1=self.qurey(graph,mapping,queries[i][0],queries[i][1],{queries[i][0]})
+            # check a-->b has the path
+            res1=self.dfsquery(graph,vals,queries[i][0],queries[i][1],{queries[i][0]})
             if res1==-1.0:
-                res[i]=1.0/self.qurey(graph,mapping,queries[i][1],queries[i][0],{queries[i][1]})
+                # if not check path b--->a
+                res[i]=1.0/self.dfsquery(graph,vals,queries[i][1],queries[i][0],{queries[i][1]})
             else:
                 res[i]=res1
-        
         return res
