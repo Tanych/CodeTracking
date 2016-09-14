@@ -1,7 +1,4 @@
 class Solution(object):
-    def __init__(self):
-        self.cnt=0
-        
     def helper(self,nums,target,mapping):
         if mapping[target]!=-1:
             return mapping[target]
@@ -29,8 +26,8 @@ class Solution(object):
         dp=[1]+[0]*target
         
         for i in xrange(1,len(dp)):
-            for j in xrange(len(nums)):
-                if i>=nums[j]:
-                    dp[i]+=dp[i-nums[j]]
+            for num in nums:
+                if i>=num:
+                    dp[i]+=dp[i-num]
         return dp[target]
             
