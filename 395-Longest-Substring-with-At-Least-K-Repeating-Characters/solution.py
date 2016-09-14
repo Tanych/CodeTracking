@@ -28,8 +28,10 @@ class Solution(object):
             return len(s)
         splits,sp=[],0
         while sp<len(s):
+            # finding start pos
             if s[sp] not in charset:
                 i=sp
+                # find end pos
                 while sp<len(s):
                     if s[sp] not in charset:
                         sp+=1
