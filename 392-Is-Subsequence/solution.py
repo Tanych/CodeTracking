@@ -26,7 +26,7 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
-        return self.manys(s,t)
+        #return self.manys(s,t)
         sidx=tidx=0
         while sidx<len(s) and tidx<len(t):
             if s[sidx]==t[tidx]:
