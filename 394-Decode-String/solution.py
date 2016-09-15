@@ -17,12 +17,32 @@ class Solution(object):
         for k in xrange(len(res_list)):
             res_str += res_list[k] * cnt_list[k]
         return res_str
-
+    def decodestr(self,strs):
+        cnt,res=[],[""]
+        i=0
+        while i<len(strs):
+            if strs[i].isdigit():
+                start=i
+                while strs[i+1].isdigit():
+                    i+=1
+                cnt.append(int(strs[start:i+1]))
+            elif strs[i]=='[':
+                res.append("")
+            elif strs[i]==']':
+                substr=res.pop()*cnt.pop()
+                res.append(res.pop()+substr)
+            else:
+                res.append(res.pop()+strs[i])
+            i+=1
+        return res.pop()
+                
     def decodeString(self, strs):
         """
         :type s: str
         :rtype: str
         """
+        return self.decodestr(strs)
+        
         stck = []
         for i in xrange(len(strs)):
             if strs[i] == ']':
