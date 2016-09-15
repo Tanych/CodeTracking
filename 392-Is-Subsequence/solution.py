@@ -1,4 +1,34 @@
 class Solution(object):
+    def isSubsequence1(self, s, t):
+        # create a list to save the index of each letter in t
+        listt = [[] for _ in range(26)]
+        
+        for i in range(len(t)):
+            listt[ord(t[i])- 97].append(i)
+        # create a list to find the index of each letter of s in t    
+        lists = [0 for _ in range(len(s))]
+        
+        if not s: return True
+        if not listt[ord(s[0])-97]: return False # if first letter of s is not in t
+        lists[0] = listt[ord(s[0])-97].pop(0) # min. value for first letter
+                
+        for i in range(1,len(s)):
+            if not listt[ord(s[i])-97]: return False # if the letter is not in t
+            index, value = self.helper(listt[ord(s[i])-97],lists[i-1])
+            if index == -1: return False
+            lists[i],listt[ord(s[i])-97]= value, listt[ord(s[i])-97][index+1:]
+                    
+        return lists == sorted(lists)
+      # a helper function to find the index   
+    def helper(self, nums, value):
+        if value > nums[-1]: return (-1,-1)
+        else:
+            temp, i = nums[0], 0
+            while value > temp and i < len(nums):
+                i+=1
+                temp = nums[i]
+        return (i,temp)
+        
     def manys(self,s,t):
         hmaping={}
         # pre record the position
@@ -26,7 +56,7 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
-        #return self.manys(s,t)
+        return self.isSubsequence1(s,t)
         sidx=tidx=0
         while sidx<len(s) and tidx<len(t):
             if s[sidx]==t[tidx]:
