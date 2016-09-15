@@ -9,7 +9,8 @@ class PhoneDirectory(object):
         self.maxnum=maxNumbers
         self.releasenum=[0]*maxNumbers
         self.flag=[True for _ in xrange(maxNumbers)]
-        self.nextidx=self.releaseidx=0
+        self.nextidx=self.ridx=0
+        
 
     def get(self):
         """
@@ -17,18 +18,20 @@ class PhoneDirectory(object):
         @return - Return an available number. Return -1 if none is available.
         :rtype: int
         """
-        if self.nextidx==self.maxnum and self.releaseidx<=0:
+        # first try to get the number from the release
+        if self.ridx<=0 and self.nextidx>=self.maxnum:
             return -1
-        if self.releaseidx>0:
-            self.releaseidx-=1
-            idx=self.releasenum[self.releaseidx]
-            self.flag[idx]=False
-            return idx
-        self.flag[self.nextidx]=False
+        if self.ridx>0:
+            self.ridx-=1
+            res=self.releasenum[self.ridx]
+            self.flag[res]=False
+            return res
+        # get from the available
         res=self.nextidx
+        self.flag[res]=False
         self.nextidx+=1
         return res
-
+        
     def check(self, number):
         """
         Check if a number is available or not.
@@ -36,6 +39,7 @@ class PhoneDirectory(object):
         :rtype: bool
         """
         return 0<=number<self.maxnum and self.flag[number]
+        
 
     def release(self, number):
         """
@@ -44,9 +48,11 @@ class PhoneDirectory(object):
         :rtype: void
         """
         if 0<=number<self.maxnum and not self.flag[number]:
-            self.releasenum[self.releaseidx]=number
-            self.releaseidx+=1
+            self.releasenum[self.ridx]=number
             self.flag[number]=True
+            self.ridx+=1
+            
+        
 
 
 # Your PhoneDirectory object will be instantiated and called as such:
