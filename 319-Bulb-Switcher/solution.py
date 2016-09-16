@@ -20,7 +20,7 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        return self.bruteforce(n)
+        # return self.bruteforce(n)
         # find the perfect square from 1-n
         # since the factor of n is double while the 
         # perfect square is not,the have a same factor
