@@ -51,18 +51,26 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: int
         """
-        return self.qtreesearch(matrix)
+        #return self.qtreesearch(matrix)
         def dfs(i,j):
             if not dp[i][j]:
                 val=matrix[i][j]
-                dp[i][j]=1+max(dfs(i-1,j) if i-1>=0 and val>matrix[i-1][j] else 0,
-                               dfs(i+1,j) if i+1<row and val>matrix[i+1][j] else 0,
-                               dfs(i,j-1) if j-1>=0 and val>matrix[i][j-1] else 0,
-                               dfs(i,j+1) if j+1<col and val>matrix[i][j+1] else 0)
+                left=dfs(i-1,j) if i-1>=0 and val>matrix[i-1][j] else 0
+                right=dfs(i+1,j) if i+1<row and val>matrix[i+1][j] else 0
+                down=dfs(i,j-1) if j-1>=0 and val>matrix[i][j-1] else 0
+                up=dfs(i,j+1) if j+1<col and val>matrix[i][j+1] else 0
+                dp[i][j]=1+max(left,right,down,up)
             return dp[i][j]
          
         if not matrix or not matrix[0]: return 0
         row=len(matrix)
         col=len(matrix[0])
         dp=[[0]*col for i in xrange(row)]
-        return max(dfs(x,y) for x in xrange(row) for y in xrange(col))
+        maxlen=-1<<31
+        #return max(dfs(x,y) for x in xrange(row) for y in xrange(col))
+        for i in xrange(row):
+            for j in xrange(col):
+                curlen=dfs(i,j)
+                if curlen>maxlen:
+                    maxlen=curlen
+        return maxlen
