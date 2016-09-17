@@ -4,7 +4,7 @@ class HitCounter(object):
         """
         Initialize your data structure here.
         """
-        self.queue=[]
+        self.queue=collections.deque([])
         
 
     def hit(self, timestamp):
@@ -25,7 +25,7 @@ class HitCounter(object):
         :rtype: int
         """
         while self.queue and timestamp-self.queue[0]>=300:
-            self.queue.pop(0)
+            self.queue.popleft()
         return len(self.queue)
 
 
