@@ -10,7 +10,7 @@ class SummaryRanges(object):
         """
         Initialize your data structure here.
         """
-        self.interval=[]
+        self._data=[]
         
 
     def addNum(self, val):
@@ -18,30 +18,56 @@ class SummaryRanges(object):
         :type val: int
         :rtype: void
         """
-        # since interval can't be sorted, adding tuple for sort
-        heapq.heappush(self.interval,(val,Interval(val,val)))
+        if not self._data:
+            self._data.append(Interval(val,val))
+            return 
         
-
+        self._data.sort(cmp=lambda x,y:x.start-y.start)
+ 
+        # search lower bound
+        nlen=len(self._data)
+        left,right=0,nlen
+        while left<right:
+            mid=(left+right)/2
+            if self._data[mid].start>=val:
+                right=mid
+            else:
+                left=mid+1
+                
+        # if lower is 0 or nlen, sidx==eidx
+        # otherwise pointer two consective pos
+        sidx=0 if left==0 else left-1
+        eidx=nlen-1 if left==nlen else left
+    
+        st=self._data[sidx]
+        et=self._data[eidx]
+        # 1.val already in data
+        if st.start<=val and st.end>=val:
+            return 
+        if et.start<=val and et.end>=val:
+            return 
+        # 2.merge the interval,(1,1)(3,3), val==2
+        if st.end+1==val and et.start-1==val:
+            st.end=et.end
+            self._data.pop(eidx)
+            return 
+        # 3. extend to start
+        if st.end+1==val:
+            st.end=val
+            return
+        # 4. extend to b
+        if et.start-1==val:
+            et.start=val
+            return 
+        
+        # 5.insert to the pos
+        self._data.insert(left,Interval(val,val))
+        
     def getIntervals(self):
         """
         :rtype: List[Interval]
         """
-        res=[]
-        while self.interval:
-            index,curr_inv=heapq.heappop(self.interval)
-            if not res:
-                 res.append((index,curr_inv))
-            else:
-                preindex,pre_inv=res[-1]
-                # merge pre and curr,if end+1>=start
-                if pre_inv.end+1>=curr_inv.start:
-                    pre_inv.end=max(pre_inv.end,curr_inv.end)
-                else:
-                    res.append((index,curr_inv))
-        # update the interval
-        self.interval=res
-        # get the interval list
-        return list(map(lambda x:x[1],res))
+        return self._data
         
 
 
