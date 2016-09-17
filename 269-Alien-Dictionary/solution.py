@@ -4,42 +4,44 @@ class Solution(object):
         :type words: List[str]
         :rtype: str
         """
-        # building a graph through the words order
-        graph, degree = {i:[] for i in xrange(26)}, {}
+        graph={chr(i+97):[] for i in xrange(26)}
+        degree={}
         
-        # get unique char and mark unvisited
+        # get the degree char
         for word in words:
             for ch in word:
                 if ch not in degree:
-                    degree[ord(ch)-97]=0
-        # building graph
-        for i in xrange(1,len(words)):
+                    degree[ch]=0
+        #build graph
+        n=len(words)
+        for i in xrange(1,n):
             j=0
             preword,curword=words[i-1],words[i]
             while j<min(len(preword),len(curword)):
                 if preword[j]!=curword[j]:
-                    graph[ord(preword[j])-97]=graph.get(ord(preword[j])-97, []) + [ord(curword[j])-97]
-                    degree[ord(curword[j])-97]+=1
+                    graph[preword[j]].append(curword[j])
+                    degree[curword[j]]+=1
                     break
                 j+=1
-        
-        res=''
-        queue=[]
+        print graph
+        queue=collections.deque([])
         for node in degree:
             if not degree[node]:
                 queue.append(node)
-                
+        
+        res=[]
         while queue:
-            peak=queue.pop(0)
-            res+=chr(peak+97)
+            peak=queue.popleft()
+            res.append(peak)
             for node in graph[peak]:
                 degree[node]-=1
                 if not degree[node]:
                     queue.append(node)
-        # has cycle
+        # check valid
         for node in degree:
             if degree[node]:
-                return ''
-        return res
+                return ""
+        return ''.join(res)
+                
             
         
