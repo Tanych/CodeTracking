@@ -5,4 +5,13 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: List[int]
         """
-        return list(set(nums1)&set(nums2))
+        res=[]
+        mapping={}
+        for num in nums1:
+            mapping[num]=mapping.get(num,0)+1
+        
+        for num in nums2:
+            if num in mapping:
+                res.append(num)
+                del mapping[num]
+        return res
