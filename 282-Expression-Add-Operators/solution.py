@@ -17,27 +17,23 @@ class Solution(object):
         return res
         
     def travel(self,num,target,pos,path,prenum,curres,res):
-        # find one solution
         if pos==len(num) and curres==target:
+            print prenum,curres,target
             res.append(path)
             return
         strnum=''
-        curnum=0
         for i in xrange(pos,len(num)):
-            # get rid of the '0'
+            # get 0001
             if num[pos]=='0' and i>pos: break
-            # substring
             strnum+=num[i]
-            curnum=curnum*10+int(num[i])
+            curnum=int(strnum)
             if curnum>(1<<31): break
-            
             if pos==0:
                 self.travel(num,target,i+1,path+strnum,curnum,curnum,res)
             else:
                 self.travel(num,target,i+1,path+'+'+strnum,curnum,curres+curnum,res)
+                # it's -curnum not curnum
                 self.travel(num,target,i+1,path+'-'+strnum,-curnum,curres-curnum,res)
-                # it's more complicated, 2+3*4, curres--5,prenum--3, the result would
-                # (5-3)+3*4, if it's 2*3*4-->prenum is 2*3 (2*3-2*3)+2*3*4
                 self.travel(num,target,i+1,path+'*'+strnum,prenum*curnum,(curres-prenum)+prenum*curnum,res)
         
        
