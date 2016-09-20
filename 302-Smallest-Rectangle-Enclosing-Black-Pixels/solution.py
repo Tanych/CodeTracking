@@ -1,20 +1,20 @@
 class Solution(object):
-    def searchrows(self, image, start, end, istop):
-        while start != end:
-            mid = (start + end) / 2
-            if ('1' in image[mid]) == istop:
-                end = mid
+    def searchrows(self,image,start,end,istop):
+        while start<end:
+            mid=(start+end)/2
+            if ('1' in image[mid])==istop:
+                end=mid
             else:
-                start = mid + 1
+                start=mid+1
         return start
-
-    def searchcols(self, image, start, end, top, bottom, isleft):
-        while start != end:
-            mid = (start + end) / 2
-            if any(image[k][mid] == '1' for k in xrange(top, bottom)) == isleft:
-                end = mid
+        
+    def searchcols(self,image,start,end,top,bottom,isleft):
+        while start<end:
+            mid=(start+end)/2
+            if any('1'==image[k][mid] for k in xrange(top,bottom))==isleft:
+                end=mid
             else:
-                start = mid + 1
+                start=mid+1
         return start
         
     def minArea(self, image, x, y):
