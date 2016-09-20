@@ -1,5 +1,12 @@
 class Solution(object):
     def removedfs(self,s,res,last_i,last_j,pair):
+        """
+        last_i: the position occurs non-balance (), mean ) is more than (
+        for the pair'()'.
+        last_j: the last delete position of pair ), if we don't record the 
+        position we might get duplicate results.
+        pair: for the op oder or reverse order.
+        """
         count=0
         # new part
         for i in xrange(last_i,len(s)):
@@ -7,8 +14,9 @@ class Solution(object):
             if s[i]==pair[1]:count-=1
             if count>=0:continue
             for j in xrange(last_j,i+1):
-                # get rid of the last op position j and )) the last ')'
-                if s[j]==pair[1] and (s[j-1]!=pair[1] or j==last_j):
+                # j==last_j focus on ))) or (( this situation
+                if s[j]==pair[1] and (j==last_j or s[j-1]!=pair[1]):
+                    print s,last_j,j,s[j-1],pair[1]
                     self.removedfs(s[:j]+s[j+1:],res,i,j,pair)
             return
         
@@ -47,7 +55,7 @@ class Solution(object):
         # it's a complex problem than what I think
         # EX: ()), ()())(), (()(() 
         # we know how to determine the valid parentheses, using stack or counter
-        return self.bruteforce(s)
+        #return self.bruteforce(s)
         res=[]
         pair=('(',')')
         self.removedfs(s,res,0,0,pair)
