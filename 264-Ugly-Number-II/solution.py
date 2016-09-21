@@ -4,22 +4,17 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        primes=[2, 3, 5]
-        ugly=[0]*n
-        
+        primes=[2,3,5]
         plen=len(primes)
         index=[0]*plen
-        factor=[2,3,5]
+        ugly=[1]+[0]*(n-1)
         
-        ugly[0]=1
-        curmin=1
+        factors=[i for i in primes]
         for i in xrange(1,n):
-            curmin=min(factor)
+            curmin=min(factors)
             ugly[i]=curmin
             for j in xrange(plen):
-                if curmin==factor[j]:
+                if curmin==factors[j]:
                     index[j]+=1
-                    factor[j]=primes[j]*ugly[index[j]]
+                    factors[j]=ugly[index[j]]*primes[j]
         return ugly[-1]
-        
-        
