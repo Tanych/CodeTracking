@@ -3,18 +3,12 @@ class Solution(object):
         plen=len(primes)
         if n<=0 or not plen:
             return 0
-        
         # record the index of the factors to use
         indexs=[0]*plen
         factors=[0]*plen
-        
-        super_ugly=[0]*n
-        super_ugly[0]=1
-        
+        super_ugly=[1]+[0]*(n-1)
         for i in xrange(plen):
             factors[i]=primes[i]
-        
-        curmin=1
         
         for i in xrange(1,n):
             curmin=min(factors)
@@ -25,7 +19,6 @@ class Solution(object):
                     indexs[j]+=1
                     # EX,since curmin=2 and the next factor for 2 should be 2*2
                     factors[j]=primes[j]*super_ugly[indexs[j]]
-                    
         return super_ugly[-1]
         
     def nthSuperUglyNumber(self, n, primes):
