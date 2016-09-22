@@ -25,6 +25,7 @@ class Solution(object):
         for i in xrange(len(s)):
             if s[i].isdigit():
                 num=num*10+int(s[i])
+            # i==len(s)-1 in case of the only num in list
             if (not s[i].isdigit() and s[i]!=' ') or i==len(s)-1:
                 # the op is the previous op
                 # 14*3/2 whien s[i]=='*' ,op is the first '+'
