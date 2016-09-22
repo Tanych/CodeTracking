@@ -21,10 +21,9 @@ class Solution(object):
         right=self.lowestCommonAncestor(root.right,p,q)
         if not left:
             return right
+        elif not right:
+            return left
         else:
-            if not right:
-                return left
-            else:
-                return root
+            return root
         
             
