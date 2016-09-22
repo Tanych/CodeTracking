@@ -5,15 +5,16 @@ class Solution(object):
         :rtype: bool
         """
         special_num={'1':'1','6':'9','8':'8','9':'6','0':'0'}
-        if len(num)==1:
+        n=len(num)
+        if n==1:
             if num[0] in ['1','8','0']:
                 return True
             else:
                 return False
         
-        for index in range(len(num)/2+1):
-            if num[index] not in special_num:
+        for i in xrange(n/2+1):
+            if num[i] not in special_num:
                 return False
-            if num[len(num)-1-index] != special_num[num[index]]:
+            if num[n-1-i] != special_num[num[i]]:
                 return False
         return True
