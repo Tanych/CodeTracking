@@ -65,7 +65,7 @@ class WordDictionary(object):
                 break
         # check whether it search on the end
         if curnode:
-            return  True and curnode.isend
+            return  curnode.isend
         else:
             return False
                     
