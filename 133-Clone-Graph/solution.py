@@ -10,12 +10,11 @@ class Solution(object):
             return None
         if node.label not in graph:
             newnode=UndirectedGraphNode(node.label)
-            graph[newnode.label]=newnode
-            # for the neighors to get the result recursive
+            graph[node.label]=newnode
             for neigh in node.neighbors:
                 self.dfs(neigh,graph)
-                graph[newnode.label].neighbors.append(graph[neigh.label])
-        
+                graph[node.label].neighbors.append(graph[neigh.label])
+                
     def cloneGraph(self, node):
         """
         :type node: UndirectedGraphNode
