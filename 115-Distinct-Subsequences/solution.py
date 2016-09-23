@@ -54,7 +54,7 @@ class Solution(object):
                 tmp=dp[j]
                 # update the dp[i][j]
                 # pre corresponds to dp[i-1][j-1]
-                dp[j]=tmp+(pre if t[j-1]==s[i-1] else 0)
+                dp[j]=dp[j]+(pre if t[j-1]==s[i-1] else 0)
                 pre=tmp
                 
         return dp[-1]
