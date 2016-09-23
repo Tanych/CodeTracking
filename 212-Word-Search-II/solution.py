@@ -15,7 +15,9 @@ class Solution(object):
         if pNode.val:
             res.append(pNode.val)
             pNode.val=None
-            
+            # if here return
+            # we can't get the words with same prefix
+            # such ben bena benf,only get ben
         # move down
         board[i][j]= '*'
         # four direction to search
