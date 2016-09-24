@@ -1,18 +1,4 @@
 class Solution(object):
-    def dfshelper(self,res,dp,path,pos,strs):
-        # if reach the end of one path
-        n=len(strs)
-        if pos==n:
-            res.append(path)
-            return
-        
-        for i in xrange(pos,n):
-            # if currecnt pos is pandirome
-            if dp[pos][i]:
-                # add to path check the rest
-                self.dfshelper(res,dp,path+[strs[pos:i+1]],i+1,strs)
-        
-        
     def partition(self, s):
         """
         :type s: str
@@ -34,6 +20,17 @@ class Solution(object):
             for pre in xrange(cur+1):
                 if s[cur]==s[pre] and (cur-pre<=2 or dp[pre+1][cur-1]):
                     dp[pre][cur]=True
-        self.dfshelper(res,dp,[],0,s)
+        # dfs search
+        def dfs(res,path,pos):
+            if pos==n:
+                res.append(path)
+                return
+            for i in xrange(pos,n):
+                # if currecnt pos is pandirome
+                if dp[pos][i]:
+                    # add to path check the rest
+                    dfs(res,path+[s[pos:i+1]],i+1)
+        
+        dfs(res,[],0)
         return res
         
