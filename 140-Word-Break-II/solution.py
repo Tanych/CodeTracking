@@ -6,7 +6,8 @@ class Solution(object):
         :rtype: List[str]
         """
         res=[]
-        self.dfs(s,wordDict,'',res)
+        dp=self.dpcheckbk(s,wordDict)
+        self.dfs(s,0,wordDict,'',res,dp)
         return res
         
     def dpcheckbk(self,s,wordDict):
@@ -19,20 +20,20 @@ class Solution(object):
                 if dp[k] and s[k:i] in wordDict:
                     dp[i]=True
                     break
-        return dp[n]
+        return dp
         
-    def dfs(self,s,wordDict,path,res):
+    def dfs(self,s,idx,wordDict,path,res,dp):
         """
         string for one level 
         res to store the result
         """
-        if self.dpcheckbk(s,wordDict):
-            if len(s)==0:
+        if dp[idx]:
+            if len(s)==idx:
                 #get rid of the first' '
                 res.append(path[1:])
-            for i in xrange(1,len(s)+1):
-                if s[:i] in wordDict:
-                    self.dfs(s[i:],wordDict,path+' '+s[:i],res)
+            for i in xrange(idx+1,len(s)+1):
+                if s[idx:i] in wordDict and dp[i]:
+                    self.dfs(s,i,wordDict,path+' '+s[idx:i],res,dp)
                     
     
     def bkpos(self):
