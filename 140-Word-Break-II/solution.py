@@ -6,8 +6,31 @@ class Solution(object):
         :rtype: List[str]
         """
         res=[]
-        dp=self.dpcheckbk(s,wordDict)
-        self.dfs(s,0,wordDict,'',res,dp)
+        # 1.building divide dp 
+        n=len(s)
+        # dp[i] mean (i:n) can be divided
+        dp=[False]*(n+1)
+        dp[n]=True
+        
+        for j in xrange(n,0,-1):
+            for i in xrange(j-1,-1,-1):
+                if dp[j] and s[i:j] in wordDict:
+                    dp[i]=True
+
+        def dfs(idx,path):
+            """
+            string for one level 
+            res to store the result
+            """
+            if dp[idx]:
+                if n==idx:
+                    #get rid of the first' '
+                    res.append(path[1:])
+                    return
+                for i in xrange(idx+1,n+1):
+                    if s[idx:i] in wordDict and dp[i]:
+                        dfs(i,path+' '+s[idx:i])
+        dfs(0,'')
         return res
         
     def dpcheckbk(self,s,wordDict):
@@ -31,6 +54,7 @@ class Solution(object):
             if len(s)==idx:
                 #get rid of the first' '
                 res.append(path[1:])
+                return
             for i in xrange(idx+1,len(s)+1):
                 if s[idx:i] in wordDict and dp[i]:
                     self.dfs(s,i,wordDict,path+' '+s[idx:i],res,dp)
