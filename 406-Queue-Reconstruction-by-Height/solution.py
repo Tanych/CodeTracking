@@ -6,15 +6,14 @@ class Node(object):
         self.right=None
         
 class Solution(object):
-    def reconstructQueue_on(self,people):
+    def reconstructQueue(self,people):
         """
         O(nlgn)---only for taller not fit for taller or equal
         """
         if not people:
             return []
         # sort the people with height descending
-        people.sort(cmp=lambda x,y:y[0]-x[0])
-        print people
+        people.sort(cmp=lambda x,y:y[0]-x[0] if x[0]!=y[0] else x[1]-y[1])
         root=Node(people[0])
         for p in people[1:]:
             self.insert(root,p,p[1])
@@ -50,11 +49,12 @@ class Solution(object):
         res.append(root.person)
         self.inorder(root.right,res)
         
-    def reconstructQueue(self, people):
+    def reconstructQueue_on(self, people):
         """
         O(n^2)
         """
         people=sorted(people,cmp=lambda x,y:y[0]-x[0] if x[0]!=y[0] else x[1]-y[1])
+        print people
         res=[]
         for h,i in people:
             res.insert(i,[h,i])
