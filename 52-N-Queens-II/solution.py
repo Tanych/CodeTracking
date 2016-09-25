@@ -26,22 +26,8 @@ class Solution(object):
                 return False
             i-=1
             j+=1
-            
         return True
         
-    def dfs(self,bd,n,row):
-        if row==n:
-            self.count+=1
-            return
-        col=0
-        while col!=n:
-            if self.checkvalid(bd,row,col,n):
-                # the backtracking downtown
-                bd[row]=bd[row][:col]+'Q'+bd[row][col+1:]
-                self.dfs(bd,n,row+1)
-                # the backtracking uptown
-                bd[row]=bd[row][:col]+'.'+bd[row][col+1:]
-            col+=1
                 
     def totalNQueens(self, n):
         """
@@ -50,8 +36,16 @@ class Solution(object):
         """
         
         # initial the board
-        board=['.'*n for _ in xrange(n)]
-            
-        self.dfs(board,n,0)
+        board=[['.' for _ in xrange(n)] for _ in xrange(n)]
+        def dfs(borad,n,row):
+            if row==n:
+                self.count+=1
+                return
+            for col in xrange(n):
+                if self.checkvalid(board,row,col,n):
+                    borad[row][col]='Q'
+                    dfs(board,n,row+1)
+                    borad[row][col]='.'
+        dfs(board,n,0)
         return self.count
         
