@@ -32,53 +32,18 @@ class Solution(object):
         :type n: int
         :rtype: List[List[str]]
         """
-        """
-        why the return res is [...], it's doesn't change
-        """
-        
-        # initial the board
-        board=['.'*n for _ in xrange(n)]
+        board=[['.' for _ in xrange(n)] for _ in xrange(n)]
         res=[]
-        
         def dfs(bd,n,row):
             if row==n:
-                #the problem in the java or c++ model
-                """
-                # res.append(bd)
-                the bd is a refence for the same address block
-                when the backtracking ended, the bd get to the initial
-                state, so it would be ['.....','....'] the modify can't be apply
-                """
-                
-                res.append(copy.deepcopy(bd))
+                res.append([''.join(row) for row in bd])
                 return
-            col=0
-            while col!=n:
+            for col in xrange(n):
                 if self.checkvalid(bd,row,col,n):
-                    # the backtracking downtown
-                    bd[row]=bd[row][:col]+'Q'+bd[row][col+1:]
+                    bd[row][col]='Q'
                     dfs(bd,n,row+1)
-                    # the backtracking uptown
-                    bd[row]=bd[row][:col]+'.'+bd[row][col+1:]
-                col+=1
-            
+                    bd[row][col]='.'
         dfs(board,n,0)
         return res
-        
-    def solveNQueens1(self, n):
-        def dfs(board, row):
-            if row == n:
-                result.append(['.' * x + 'Q' + '.' * (n - 1 - x) for x in board])
-                return
-            for x in set_n - set(board):
-                # check diagonal conflict
-                if all(row - i != abs(x - y) for i, y in enumerate(board[:row])):
-                    board[row] = x
-                    dfs(board, row + 1)
-                    board[row] = '.'
-    
-        result, set_n = [], {i for i in xrange(n)}
-        dfs(['.'] * n, 0)
-        return result
         
         
