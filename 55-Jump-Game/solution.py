@@ -9,23 +9,23 @@ class Solution(object):
         if n==1:
             return True
             
-        #total pos
-        tpos=0
+        #total jump
+        tjump=0
         # start choice is 0
-        kpos=0
-        maxstep=0
-        while nums[tpos]>0:
+        localjump=0
+        maxjump=0
+        while nums[tjump]>0:
             # directly reacheable return True
-            if tpos+nums[tpos]>=n-1:
+            if tjump+nums[tjump]>=n-1:
                 return True
-            for i in xrange(1,nums[tpos]+1):
-                if i+nums[tpos+i]>maxstep:
-                    maxstep=i+nums[tpos+i]
-                    kpos=i
+            for i in xrange(1,nums[tjump]+1):
+                if i+nums[tjump+i]>maxjump:
+                    maxjump=i+nums[tjump+i]
+                    localjump=i
             # mark the total move step
-            tpos+=kpos
+            tjump+=localjump
             # reset to next iteration
-            maxstep=0
-            kpos=0
+            maxjump=0
+            localjump=0
         return False
         
