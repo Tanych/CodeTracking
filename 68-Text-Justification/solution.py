@@ -42,7 +42,7 @@ class Solution(object):
             # the gaps need fill more space
             # if only one word in one line, and not last line, we only jump to remaining
             # if don't and add j!=i+1 it's ok since the next for won't run
-            if  j!=i+1 and j!=wlen:
+            if cntgaps and j!=wlen:
                 # the 1 is for the default seprate the words in previous step
                 avgfill=(maxWidth-sum_len)/cntgaps+1
                 extrafill=(maxWidth-sum_len)%cntgaps
