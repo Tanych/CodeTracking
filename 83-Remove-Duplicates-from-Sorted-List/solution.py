@@ -17,13 +17,9 @@ class Solution(object):
         cur=head.next
         while cur:
             if cur.val==pre.val:
-                if not cur.next:
-                    pre.next=None
-                    break
-                else:
-                    p=cur.next
-                    pre.next=cur.next
-                    cur=p
+                p=cur.next
+                pre.next=cur.next
+                cur=p
             else:
                 pre=cur
                 cur=cur.next
