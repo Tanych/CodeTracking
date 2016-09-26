@@ -6,11 +6,29 @@
 #         self.right = None
 
 class Solution(object):
+    def recoverTree_stck(self,root):
+        stck=[]
+        cur,prev,first,second=root,None,None,None
+        while cur or stck:
+            if cur:
+                stck.append(cur)
+                cur=cur.left
+            elif stck:
+                cur=stck.pop()
+                if prev and cur.val<=prev.val:
+                    if not first:
+                        first=prev
+                    second=cur
+                prev=cur
+                cur=cur.right
+        first.val,second.val=second.val,first.val
+                
     def recoverTree(self, root):
         """
         :type root: TreeNode
         :rtype: void Do not return anything, modify root in-place instead.
         """
+        return self.recoverTree_stck(root)
         # EX: 5,2,3,4,1
         # the constant space solution only, morris can work
         cur,pre=root,None
