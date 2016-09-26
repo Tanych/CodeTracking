@@ -11,6 +11,9 @@ class Solution(object):
         :type s: str
         :rtype: List[str]
         """
+        if len(s)>12:
+            return []
+            
         def dfs(strs,step,path,res):
             if step==3:
                 if self.isvalid(strs):
