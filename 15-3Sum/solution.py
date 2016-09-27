@@ -4,41 +4,24 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        n=len(nums)
-        
-        if n<3:
-            return []
-
+        res,n=[],len(nums)
         nums.sort()
-        res=[]
-        i=0
-        while i<n-2:
-            if nums[i]>0:break
-            start,end=i+1,n-1
-            while start<end:
-                sum_num=nums[i]+nums[start]+nums[end]
-                if sum_num==0: 
-                    res.append([nums[i],nums[start],nums[end]])
-                if sum_num>=0:
-                    # skip the duplicate num
-                    preend=end
-                    end-=1
-                    while nums[end]==nums[preend] and start<end:
-                        preend=end
-                        end-=1
-                if sum_num<=0:
-                    prestart=start
-                    start+=1
-                    while nums[prestart]==nums[start] and start<end:
-                        prestart=start
-                        start+=1
-            # skip the duplicate result [-1,-1,-1,0,2]
-            prei=i
-            i+=1
-            while nums[prei]==nums[i] and i<n-2:
-                prei=i
-                i+=1
-
+        for i in xrange(n-2):
+            if i==0 or (i>0 and nums[i]!=nums[i-1]):
+                low,high,total=i+1,n-1,0-nums[i]
+                while low<high:
+                    if nums[low]+nums[high]==total:
+                        res.append([nums[i],nums[low],nums[high]])
+                        while low<high and nums[low]==nums[low+1]:
+                            low+=1
+                        while low<high and nums[high]==nums[high-1]:
+                            high-=1
+                        low+=1
+                        high-=1
+                    elif nums[low]+nums[high]>total:
+                        high-=1
+                    else:
+                        low+=1
         return res
         
                 
